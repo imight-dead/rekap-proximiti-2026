@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DET PUNYA NI BOS - Rekap Pengumpulan PROXIMITI 2026</title>
+    <title>Rekap Pengumpulan Penugasan PROXIMITI 2026</title>
     <style>
         * {
             margin: 0;
@@ -33,13 +34,13 @@
             max-width: 100%;
             height: auto;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             margin-bottom: 20px;
         }
 
         h1 {
             font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             margin-bottom: 10px;
         }
 
@@ -57,19 +58,19 @@
         }
 
         .menu-card {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .menu-card:hover {
             transform: translateY(-5px);
-            background: rgba(255,255,255,0.2);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
 
         .menu-card.disabled {
@@ -79,7 +80,7 @@
 
         .menu-card.disabled:hover {
             transform: none;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .menu-card h3 {
@@ -115,12 +116,19 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .back-btn {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
             padding: 12px 25px;
@@ -132,7 +140,7 @@
         }
 
         .back-btn:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.3);
         }
 
         .legion-select {
@@ -142,13 +150,13 @@
             border-radius: 10px;
             border: none;
             font-size: 1em;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             color: #1a2a3a;
             margin-bottom: 20px;
         }
 
         .data-info {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 20px;
@@ -173,7 +181,7 @@
         }
 
         .spinner {
-            border: 4px solid rgba(255,255,255,0.3);
+            border: 4px solid rgba(255, 255, 255, 0.3);
             border-top: 4px solid #fff;
             border-radius: 50%;
             width: 40px;
@@ -183,14 +191,19 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Table Styles */
         .table-container {
             overflow-x: auto;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
             padding: 10px;
         }
@@ -201,19 +214,20 @@
             min-width: 600px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 15px;
             text-align: left;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         th {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             font-weight: 600;
         }
 
         tr:hover {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .link-btn {
@@ -238,7 +252,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.8);
             padding: 12px 18px;
             border-radius: 30px;
             display: flex;
@@ -281,11 +295,11 @@
             text-overflow: ellipsis;
             cursor: pointer;
         }
-        
+
         .audio-controls span#song-title:hover {
             text-decoration: underline;
         }
-        
+
         /* Playlist Menu */
         .playlist-menu {
             display: none;
@@ -298,26 +312,33 @@
             min-width: 280px;
             max-height: 300px;
             overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
-        
+
         .playlist-menu.show {
             display: block;
             animation: slideUp 0.3s ease;
         }
-        
+
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
         .playlist-header {
             padding: 10px 15px;
             font-weight: bold;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 5px;
         }
-        
+
         .playlist-item {
             padding: 12px 15px;
             cursor: pointer;
@@ -326,32 +347,32 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .playlist-item:hover {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
-        
+
         .playlist-item.active {
             background: rgba(102, 126, 234, 0.3);
             color: #667eea;
         }
-        
+
         .playlist-item .song-number {
             width: 24px;
             height: 24px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.75em;
         }
-        
+
         .playlist-item.active .song-number {
             background: #667eea;
             color: white;
         }
-        
+
         .playlist-item .song-name {
             flex: 1;
             font-size: 0.9em;
@@ -361,7 +382,7 @@
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
         }
 
@@ -394,7 +415,7 @@
         .refresh-btn:hover {
             background: #2ecc71;
         }
-        
+
         .auto-refresh-indicator {
             display: inline-block;
             background: rgba(46, 204, 113, 0.3);
@@ -405,10 +426,17 @@
             margin-left: 10px;
             animation: pulse 2s infinite;
         }
-        
+
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
         }
 
         /* Responsive */
@@ -416,12 +444,13 @@
             h1 {
                 font-size: 1.8em;
             }
-            
+
             .menu-card {
                 padding: 20px;
             }
-            
-            th, td {
+
+            th,
+            td {
                 padding: 10px;
                 font-size: 0.9em;
             }
@@ -438,6 +467,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Home Section -->
@@ -456,21 +486,21 @@
         <!-- Data Section -->
         <section id="data-section" class="data-section">
             <button class="back-btn" onclick="goHome()">← Balik ke Home</button>
-            
+
             <div class="data-info">
                 <h2 id="section-title">Loading...</h2>
                 <p id="section-desc"></p>
-                
+
                 <label for="legion-select" style="display: block; margin-top: 15px; margin-bottom: 8px;">
                     Pilih Legion-nya nih:
                 </label>
                 <select id="legion-select" class="legion-select" onchange="filterByLegion()">
                     <option value="">-- Semua Legion --</option>
                 </select>
-                
+
                 <button class="refresh-btn" onclick="refreshData()">🔄 Refresh Data</button>
                 <span class="auto-refresh-indicator" id="auto-refresh-indicator">⚡ Auto-refresh: ON (5s)</span>
-                
+
                 <div class="count-badge" id="count-badge">
                     Loading...
                 </div>
@@ -489,7 +519,7 @@
         <button id="audio-btn" onclick="toggleAudio()">▶</button>
         <button id="next-btn" onclick="nextSong()">⏭</button>
         <span id="song-title" onclick="togglePlaylist()">Drop Dead - Olivia Rodrigo</span>
-        
+
         <!-- Playlist Menu -->
         <div class="playlist-menu" id="playlist-menu">
             <div class="playlist-header">Playlist</div>
@@ -517,7 +547,7 @@
             penugasan_day2: '1tYmL83-GddIeYzkgUZc1voToBljmruvRJcyfltiQdrc',
             livereport_day3: '1rSGFXnr4ySlulKxHtKekv47LhbU-XZ0Sd6limS6gD14',
         };
-        
+
         // Fallback ke local files
         const CSV_FILES = {
             penugasan_day0: 'data/penugasan_day0.csv',
@@ -527,9 +557,9 @@
             penugasan_day2: 'data/penugasan_day2.csv',
             livereport_day3: 'data/livereport_day3.csv',
         };
-        
+
         let useLocalFiles = false; // Will switch to true if Google Sheets fails
-        
+
         function getSpreadsheetURL(sectionId, forceLocal = false) {
             if (forceLocal || useLocalFiles) {
                 return { url: CSV_FILES[sectionId], isLocal: true };
@@ -538,12 +568,12 @@
             if (!id) return null;
             // Tambah timestamp untuk bypass cache
             const timestamp = new Date().getTime();
-            return { 
+            return {
                 url: `https://docs.google.com/spreadsheets/d/${id}/export?format=csv&timestamp=${timestamp}`,
-                isLocal: false 
+                isLocal: false
             };
         }
-        
+
         // Auto-refresh setiap 5 detik
         let autoRefreshInterval = null;
 
@@ -602,7 +632,7 @@
         function parseCSV(csv) {
             const lines = csv.split('\n');
             const rawHeaders = parseCSVLine(lines[0]);
-            
+
             // Make headers unique by adding index suffix for duplicates
             const headerCount = {};
             const headers = rawHeaders.map((h, idx) => {
@@ -614,7 +644,7 @@
                 // Always add index to make unique
                 return `${cleanHeader}_COL${idx}`;
             });
-            
+
             const data = [];
 
             for (let i = 1; i < lines.length; i++) {
@@ -662,17 +692,17 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const csv = await response.text();
-                
+
                 // Check if it's valid CSV (not HTML error page)
                 if (csv.includes('<!DOCTYPE') || csv.includes('<html')) {
                     throw new Error('Received HTML instead of CSV');
                 }
-                
+
                 console.log('CSV received, length:', csv.length);
                 return parseCSV(csv);
             } catch (error) {
                 console.error('Error fetching from Google Sheets:', error);
-                
+
                 // Fallback ke local files
                 if (!urlInfo.isLocal) {
                     console.log('Falling back to local file...');
@@ -687,7 +717,7 @@
         async function showSection(sectionId) {
             currentSection = sectionId;
             const menuItem = menuItems.find(m => m.id === sectionId);
-            
+
             document.getElementById('home-section').style.display = 'none';
             document.getElementById('data-section').style.display = 'block';
             document.getElementById('section-title').textContent = menuItem.title;
@@ -709,7 +739,7 @@
 
             // Load data
             await loadData(sectionId);
-            
+
             // Start auto-refresh setiap 5 detik
             startAutoRefresh();
         }
@@ -719,11 +749,11 @@
             document.getElementById('home-section').style.display = 'block';
             document.getElementById('data-section').style.display = 'none';
             currentSection = null;
-            
+
             // Stop auto-refresh
             stopAutoRefresh();
         }
-        
+
         // Auto-refresh functions
         function startAutoRefresh() {
             stopAutoRefresh(); // Clear existing interval
@@ -736,7 +766,7 @@
             }, 5000); // 5 detik
             console.log('Auto-refresh started (every 5 seconds)');
         }
-        
+
         function stopAutoRefresh() {
             if (autoRefreshInterval) {
                 clearInterval(autoRefreshInterval);
@@ -744,11 +774,11 @@
                 console.log('Auto-refresh stopped');
             }
         }
-        
+
         // Load data tanpa loading indicator (untuk auto-refresh)
         async function loadDataSilent(sectionId) {
             const result = await fetchSheetData(sectionId);
-            
+
             if (!result || result.data.length === 0) {
                 return; // Don't update if fetch failed
             }
@@ -761,7 +791,7 @@
         // Load data for section
         async function loadData(sectionId) {
             const result = await fetchSheetData(sectionId);
-            
+
             if (!result || result.data.length === 0) {
                 document.getElementById('table-container').innerHTML = `
                     <div class="empty-state">
@@ -781,30 +811,30 @@
         // Process data based on section type
         function processData(result, sectionId) {
             const data = result.data;
-            
+
             console.log('Processing data, total rows:', data.length);
             if (data.length > 0) {
                 console.log('First row keys:', Object.keys(data[0]));
                 console.log('First row _allValues:', data[0]._allValues);
             }
-            
+
             return data.map((row, idx) => {
                 // Use _allValues array to find data by scanning all cells
                 const allValues = row._allValues || [];
-                
+
                 // For spreadsheet, columns are usually: Timestamp, NAMA LENGKAP, NIM, KELAS, REGU, then links...
                 // Let's use _allValues directly for more reliable parsing
                 let nama = allValues[1] || '';  // Column B = NAMA LENGKAP
                 let nim = allValues[2] || '';   // Column C = NIM
                 let kelas = allValues[3] || ''; // Column D = KELAS
                 let regu = allValues[4] || '';  // Column E = REGU
-                
+
                 // Fallback: scan all columns if above doesn't work
                 if (!nama || !regu) {
                     Object.keys(row).forEach(key => {
                         const val = row[key];
                         if (!val || key === '_allValues') return;
-                        
+
                         const keyUpper = key.toUpperCase();
                         if (keyUpper.includes('NAMA') && !nama) {
                             nama = val;
@@ -817,7 +847,7 @@
                         }
                     });
                 }
-                
+
                 if (idx < 3) {
                     console.log(`Row ${idx}: nama="${nama}", nim="${nim}", kelas="${kelas}", regu="${regu}"`);
                     console.log(`Row ${idx} allValues:`, allValues.slice(0, 10));
@@ -835,12 +865,12 @@
                 const driveLinks = [];
                 const igLinks = [];
                 const tiktokLinks = [];
-                
+
                 allValues.forEach((val, idx) => {
                     if (!val || typeof val !== 'string') return;
                     const cleanVal = val.trim();
                     if (!cleanVal) return;
-                    
+
                     if (cleanVal.includes('drive.google.com')) {
                         driveLinks.push(cleanVal);
                     }
@@ -851,7 +881,7 @@
                         tiktokLinks.push(cleanVal);
                     }
                 });
-                
+
                 if (idx < 2) {
                     console.log(`Row ${idx} links found: drive=${driveLinks.length}, ig=${igLinks.length}, tiktok=${tiktokLinks.length}`);
                 }
@@ -894,7 +924,7 @@
         // Filter by legion
         function filterByLegion() {
             const selectedLegion = document.getElementById('legion-select').value;
-            
+
             // Kalau belum pilih legion, tampilkan pesan untuk pilih dulu
             if (!selectedLegion) {
                 document.getElementById('table-container').innerHTML = `
@@ -906,14 +936,14 @@
                 document.getElementById('count-badge').textContent = 'Pilih legion dulu ya!';
                 return;
             }
-            
+
             // Filter berdasarkan legion yang dipilih
             const legionName = selectedLegion.toLowerCase().replace('legion of ', '');
             const filteredData = currentData.filter(row => {
                 const rowRegu = row.regu.toLowerCase().replace('legion of ', '');
                 return rowRegu.includes(legionName) || legionName.includes(rowRegu);
             });
-            
+
             console.log('Selected legion:', selectedLegion);
             console.log('Total data:', currentData.length);
             console.log('Filtered data:', filteredData.length);
@@ -975,7 +1005,7 @@
 
         // Get columns for each section
         function getColumnsForSection(sectionId) {
-            switch(sectionId) {
+            switch (sectionId) {
                 case 'penugasan_day0':
                     return [
                         { key: 'nametag', label: 'Nametag' },
@@ -1033,7 +1063,7 @@
             { file: 'there-is-a-light.mp3', title: 'There Is a Light That Never Goes Out - The Smiths' },
             { file: 'everything-you-are.mp3', title: 'Everything You Are' }
         ];
-        
+
         let currentSongIndex = 0;
         let isPlaying = false;
         let playlistVisible = false;
@@ -1059,7 +1089,7 @@
             songTitle.textContent = playlist[index].title;
             updatePlaylistUI();
         }
-        
+
         function updatePlaylistUI() {
             const items = playlistItems.querySelectorAll('.playlist-item');
             items.forEach((item, index) => {
@@ -1082,7 +1112,7 @@
             }
             isPlaying = !isPlaying;
         }
-        
+
         function playSong(index) {
             loadSong(index);
             if (!isPlaying) {
@@ -1094,7 +1124,7 @@
             }
             hidePlaylist();
         }
-        
+
         function togglePlaylist() {
             playlistVisible = !playlistVisible;
             if (playlistVisible) {
@@ -1103,7 +1133,7 @@
                 playlistMenu.classList.remove('show');
             }
         }
-        
+
         function hidePlaylist() {
             playlistVisible = false;
             playlistMenu.classList.remove('show');
@@ -1130,7 +1160,7 @@
             nextSong();
             audio.play();
         });
-        
+
         // Close playlist when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.audio-controls')) {
@@ -1145,4 +1175,5 @@
         });
     </script>
 </body>
+
 </html>
