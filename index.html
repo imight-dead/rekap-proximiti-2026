@@ -318,6 +318,22 @@
         .refresh-btn:hover {
             background: #2ecc71;
         }
+        
+        .auto-refresh-indicator {
+            display: inline-block;
+            background: rgba(46, 204, 113, 0.3);
+            color: #2ecc71;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-left: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -377,6 +393,7 @@
                 </select>
                 
                 <button class="refresh-btn" onclick="refreshData()">🔄 Refresh Data</button>
+                <span class="auto-refresh-indicator" id="auto-refresh-indicator">⚡ Auto-refresh: ON (5s)</span>
                 
                 <div class="count-badge" id="count-badge">
                     Loading...
@@ -406,8 +423,17 @@
     </audio>
 
     <script>
-        // Local CSV files (download dari Google Sheets)
-        // Untuk update data: jalankan script update-data.sh
+        // Google Sheets IDs - fetch langsung dengan auto-refresh
+        const SPREADSHEET_IDS = {
+            penugasan_day0: '1adWCS5dCfgN1EvljzTq7NSzIssnxi242GR4EX9tWAs4',
+            livereport_day1: '1_GzSEtrx_20lwFsP-pOshE4vg2JoN9usFRpbM6-UZwY',
+            penugasan_day1: '1k2T0X8tGMRJnOOMHfwT4_2bN6JjFthArClm7QBW-ANs',
+            livereport_day2: '1fsMprvX29-LYlH8uixm4irwGnLY8ZMvewKtCRQtMoaU',
+            penugasan_day2: '1tYmL83-GddIeYzkgUZc1voToBljmruvRJcyfltiQdrc',
+            livereport_day3: '1rSGFXnr4ySlulKxHtKekv47LhbU-XZ0Sd6limS6gD14',
+        };
+        
+        // Fallback ke local files
         const CSV_FILES = {
             penugasan_day0: 'data/penugasan_day0.csv',
             livereport_day1: 'data/livereport_day1.csv',
@@ -417,9 +443,24 @@
             livereport_day3: 'data/livereport_day3.csv',
         };
         
-        function getSpreadsheetURL(sectionId) {
-            return CSV_FILES[sectionId] || null;
+        let useLocalFiles = false; // Will switch to true if Google Sheets fails
+        
+        function getSpreadsheetURL(sectionId, forceLocal = false) {
+            if (forceLocal || useLocalFiles) {
+                return { url: CSV_FILES[sectionId], isLocal: true };
+            }
+            const id = SPREADSHEET_IDS[sectionId];
+            if (!id) return null;
+            // Tambah timestamp untuk bypass cache
+            const timestamp = new Date().getTime();
+            return { 
+                url: `https://docs.google.com/spreadsheets/d/${id}/export?format=csv&timestamp=${timestamp}`,
+                isLocal: false 
+            };
         }
+        
+        // Auto-refresh setiap 5 detik
+        let autoRefreshInterval = null;
 
         // Menu Configuration
         const menuItems = [
@@ -524,23 +565,35 @@
             return result;
         }
 
-        // Fetch data from Google Sheets
+        // Fetch data from Google Sheets dengan fallback ke local
         async function fetchSheetData(sectionId) {
-            const url = getSpreadsheetURL(sectionId);
-            if (!url) return null;
+            const urlInfo = getSpreadsheetURL(sectionId);
+            if (!urlInfo) return null;
 
             try {
-                console.log('Fetching from:', url);
-                const response = await fetch(url);
+                console.log('Fetching from:', urlInfo.url);
+                const response = await fetch(urlInfo.url);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const csv = await response.text();
+                
+                // Check if it's valid CSV (not HTML error page)
+                if (csv.includes('<!DOCTYPE') || csv.includes('<html')) {
+                    throw new Error('Received HTML instead of CSV');
+                }
+                
                 console.log('CSV received, length:', csv.length);
-                console.log('First 500 chars:', csv.substring(0, 500));
                 return parseCSV(csv);
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching from Google Sheets:', error);
+                
+                // Fallback ke local files
+                if (!urlInfo.isLocal) {
+                    console.log('Falling back to local file...');
+                    useLocalFiles = true;
+                    return fetchSheetData(sectionId);
+                }
                 return null;
             }
         }
@@ -571,6 +624,9 @@
 
             // Load data
             await loadData(sectionId);
+            
+            // Start auto-refresh setiap 5 detik
+            startAutoRefresh();
         }
 
         // Go back to home
@@ -578,6 +634,43 @@
             document.getElementById('home-section').style.display = 'block';
             document.getElementById('data-section').style.display = 'none';
             currentSection = null;
+            
+            // Stop auto-refresh
+            stopAutoRefresh();
+        }
+        
+        // Auto-refresh functions
+        function startAutoRefresh() {
+            stopAutoRefresh(); // Clear existing interval
+            autoRefreshInterval = setInterval(async () => {
+                if (currentSection) {
+                    console.log('Auto-refreshing data...');
+                    useLocalFiles = false; // Try Google Sheets first
+                    await loadDataSilent(currentSection);
+                }
+            }, 5000); // 5 detik
+            console.log('Auto-refresh started (every 5 seconds)');
+        }
+        
+        function stopAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+                autoRefreshInterval = null;
+                console.log('Auto-refresh stopped');
+            }
+        }
+        
+        // Load data tanpa loading indicator (untuk auto-refresh)
+        async function loadDataSilent(sectionId) {
+            const result = await fetchSheetData(sectionId);
+            
+            if (!result || result.data.length === 0) {
+                return; // Don't update if fetch failed
+            }
+
+            rawData = result.data;
+            currentData = processData(result, sectionId);
+            filterByLegion();
         }
 
         // Load data for section
