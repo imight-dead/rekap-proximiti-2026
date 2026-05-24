@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DET PUNYA NI BOS - Rekap Pengumpulan PROXIMITI 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2a3a 0%, #2d4a5e 50%, #3a5a7a 100%);
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .banner {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .menu-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .menu-card.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .menu-card.disabled:hover {
+            transform: none;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .menu-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .menu-card p {
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            margin-top: 10px;
+        }
+
+        .status-available {
+            background: #27ae60;
+        }
+
+        .status-unavailable {
+            background: #e74c3c;
+        }
+
+        /* Data View Section */
+        .data-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .legion-select {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1em;
+            background: rgba(255,255,255,0.9);
+            color: #1a2a3a;
+            margin-bottom: 20px;
+        }
+
+        .data-info {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .data-info h2 {
+            margin-bottom: 10px;
+        }
+
+        .count-badge {
+            background: #27ae60;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        th {
+            background: rgba(255,255,255,0.1);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .link-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85em;
+            display: inline-block;
+            margin: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .link-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Audio Controls */
+        .audio-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 15px 20px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .audio-controls button {
+            background: #667eea;
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+
+        .audio-controls button:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+
+        .audio-controls span {
+            font-size: 0.85em;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            opacity: 0.7;
+        }
+
+        /* Refresh Button */
+        .refresh-btn {
+            background: #27ae60;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: #2ecc71;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .menu-card {
+                padding: 20px;
+            }
+            
+            th, td {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+
+            .audio-controls {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 15px;
+            }
+
+            .audio-controls span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home-section">
+            <header>
+                <img src="banner.png" alt="PROXIMITI 2026" class="banner">
+                <h1>DET PUNYA NI BOS</h1>
+                <p class="subtitle">Rekap Pengumpulan Tugas PROXIMITI 2026 - Made with love by DET</p>
+            </header>
+
+            <div class="menu-grid" id="menu-grid">
+                <!-- Menu cards will be generated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Data Section -->
+        <section id="data-section" class="data-section">
+            <button class="back-btn" onclick="goHome()">← Balik ke Home</button>
+            
+            <div class="data-info">
+                <h2 id="section-title">Loading...</h2>
+                <p id="section-desc"></p>
+                
+                <label for="legion-select" style="display: block; margin-top: 15px; margin-bottom: 8px;">
+                    Pilih Legion-nya nih:
+                </label>
+                <select id="legion-select" class="legion-select" onchange="filterByLegion()">
+                    <option value="">-- Semua Legion --</option>
+                </select>
+                
+                <button class="refresh-btn" onclick="refreshData()">🔄 Refresh Data</button>
+                
+                <div class="count-badge" id="count-badge">
+                    Loading...
+                </div>
+            </div>
+
+            <div class="table-container" id="table-container">
+                <!-- Table will be generated by JavaScript -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <button id="audio-btn" onclick="toggleAudio()">▶</button>
+        <span>Drop Dead - Olivia Rodrigo</span>
+    </div>
+
+    <footer>
+        <p>PROXIMITI 2026 - Information Technology - Telkom University</p>
+        <p style="margin-top: 5px;">Created by DET dengan sepenuh hati</p>
+        <p style="margin-top: 5px; font-size: 0.8em;">Data realtime dari Google Sheets</p>
+    </footer>
+
+    <!-- Background Music - Add your own audio file named drop-dead.mp3 -->
+    <audio id="bg-music" loop>
+        <source src="drop-dead.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Local CSV files (download dari Google Sheets)
+        // Untuk update data: jalankan script update-data.sh
+        const CSV_FILES = {
+            penugasan_day0: 'data/penugasan_day0.csv',
+            livereport_day1: 'data/livereport_day1.csv',
+            penugasan_day1: 'data/penugasan_day1.csv',
+            livereport_day2: 'data/livereport_day2.csv',
+            penugasan_day2: 'data/penugasan_day2.csv',
+            livereport_day3: 'data/livereport_day3.csv',
+        };
+        
+        function getSpreadsheetURL(sectionId) {
+            return CSV_FILES[sectionId] || null;
+        }
+
+        // Menu Configuration
+        const menuItems = [
+            { id: 'penugasan_day0', title: 'Penugasan Day 0', desc: 'Tugas Nametag & Twibbon', available: true },
+            { id: 'livereport_day1', title: 'Live Report Day 1', desc: 'Screenshot Story IG Live Report', available: true },
+            { id: 'penugasan_day1', title: 'Penugasan Day 1', desc: 'Video Instagram & TikTok', available: true },
+            { id: 'livereport_day2', title: 'Live Report Day 2', desc: 'Screenshot Story IG Live Report', available: true },
+            { id: 'penugasan_day2', title: 'Penugasan Day 2', desc: 'Poster Digital & Video Yel-Yel', available: true },
+            { id: 'livereport_day3', title: 'Live Report Day 3', desc: 'Screenshot Story IG Live Report', available: true },
+            { id: 'livereport_day4', title: 'Live Report Day 4', desc: 'Coming soon...', available: false },
+            { id: 'penugasan_day4', title: 'Penugasan Day 4', desc: 'Coming soon...', available: false },
+            { id: 'livereport_day5', title: 'Live Report Day 5', desc: 'Coming soon...', available: false },
+            { id: 'penugasan_day5', title: 'Penugasan Day 5', desc: 'Coming soon...', available: false },
+            { id: 'livereport_day6', title: 'Live Report Day 6', desc: 'Coming soon...', available: false },
+        ];
+
+        const legions = [
+            'Legion of Amon-Ra',
+            'Legion of Ankhara',
+            'Legion of Anubis',
+            'Legion of Hathor',
+            'Legion of Neith',
+            'Legion of Nepthys',
+            'Legion of Orion',
+            'Legion of Osiris',
+            'Legion of Sphinx'
+        ];
+
+        let currentSection = null;
+        let currentData = [];
+        let rawData = [];
+
+        // Initialize menu
+        function initMenu() {
+            const menuGrid = document.getElementById('menu-grid');
+            menuGrid.innerHTML = menuItems.map(item => `
+                <div class="menu-card ${item.available ? '' : 'disabled'}" 
+                     onclick="${item.available ? `showSection('${item.id}')` : 'showUnavailable()'}">
+                    <h3>${item.title}</h3>
+                    <p>${item.desc}</p>
+                    <span class="status-badge ${item.available ? 'status-available' : 'status-unavailable'}">
+                        ${item.available ? 'Data Ready!' : 'Belum diinput nih'}
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        // Show unavailable message
+        function showUnavailable() {
+            alert('Sabar ciks! Database-nya belum diinput nih. Tunggu update dari DET ya!');
+        }
+
+        // Parse CSV
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            const rawHeaders = parseCSVLine(lines[0]);
+            
+            // Make headers unique by adding index suffix for duplicates
+            const headerCount = {};
+            const headers = rawHeaders.map((h, idx) => {
+                const cleanHeader = h.trim();
+                if (headerCount[cleanHeader] === undefined) {
+                    headerCount[cleanHeader] = 0;
+                }
+                headerCount[cleanHeader]++;
+                // Always add index to make unique
+                return `${cleanHeader}_COL${idx}`;
+            });
+            
+            const data = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+                const values = parseCSVLine(lines[i]);
+                const row = { _allValues: values }; // Store all values for easy access
+                headers.forEach((header, index) => {
+                    row[header] = values[index] || '';
+                });
+                data.push(row);
+            }
+            return { headers, data };
+        }
+
+        // Parse CSV line (handle quoted values)
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim());
+            return result;
+        }
+
+        // Fetch data from Google Sheets
+        async function fetchSheetData(sectionId) {
+            const url = getSpreadsheetURL(sectionId);
+            if (!url) return null;
+
+            try {
+                console.log('Fetching from:', url);
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const csv = await response.text();
+                console.log('CSV received, length:', csv.length);
+                console.log('First 500 chars:', csv.substring(0, 500));
+                return parseCSV(csv);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return null;
+            }
+        }
+
+        // Show data section
+        async function showSection(sectionId) {
+            currentSection = sectionId;
+            const menuItem = menuItems.find(m => m.id === sectionId);
+            
+            document.getElementById('home-section').style.display = 'none';
+            document.getElementById('data-section').style.display = 'block';
+            document.getElementById('section-title').textContent = menuItem.title;
+            document.getElementById('section-desc').textContent = menuItem.desc;
+
+            // Populate legion dropdown
+            const legionSelect = document.getElementById('legion-select');
+            legionSelect.innerHTML = '<option value="">-- Semua Legion --</option>' +
+                legions.map(l => `<option value="${l}">${l}</option>`).join('');
+
+            // Show loading
+            document.getElementById('table-container').innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Lagi ambil data dari spreadsheet nih, tunggu bentar...</p>
+                </div>
+            `;
+            document.getElementById('count-badge').textContent = 'Loading...';
+
+            // Load data
+            await loadData(sectionId);
+        }
+
+        // Go back to home
+        function goHome() {
+            document.getElementById('home-section').style.display = 'block';
+            document.getElementById('data-section').style.display = 'none';
+            currentSection = null;
+        }
+
+        // Load data for section
+        async function loadData(sectionId) {
+            const result = await fetchSheetData(sectionId);
+            
+            if (!result || result.data.length === 0) {
+                document.getElementById('table-container').innerHTML = `
+                    <div class="empty-state">
+                        <h3>Waduh, gagal ambil data!</h3>
+                        <p>Coba refresh atau cek koneksi internet ya</p>
+                    </div>
+                `;
+                document.getElementById('count-badge').textContent = 'Error loading data';
+                return;
+            }
+
+            rawData = result.data;
+            currentData = processData(result, sectionId);
+            filterByLegion();
+        }
+
+        // Process data based on section type
+        function processData(result, sectionId) {
+            const data = result.data;
+            
+            console.log('Processing data, total rows:', data.length);
+            if (data.length > 0) {
+                console.log('First row keys:', Object.keys(data[0]));
+                console.log('First row _allValues:', data[0]._allValues);
+            }
+            
+            return data.map((row, idx) => {
+                // Use _allValues array to find data by scanning all cells
+                const allValues = row._allValues || [];
+                
+                // For spreadsheet, columns are usually: Timestamp, NAMA LENGKAP, NIM, KELAS, REGU, then links...
+                // Let's use _allValues directly for more reliable parsing
+                let nama = allValues[1] || '';  // Column B = NAMA LENGKAP
+                let nim = allValues[2] || '';   // Column C = NIM
+                let kelas = allValues[3] || ''; // Column D = KELAS
+                let regu = allValues[4] || '';  // Column E = REGU
+                
+                // Fallback: scan all columns if above doesn't work
+                if (!nama || !regu) {
+                    Object.keys(row).forEach(key => {
+                        const val = row[key];
+                        if (!val || key === '_allValues') return;
+                        
+                        const keyUpper = key.toUpperCase();
+                        if (keyUpper.includes('NAMA') && !nama) {
+                            nama = val;
+                        } else if (keyUpper.includes('NIM') && !nim) {
+                            nim = val;
+                        } else if (keyUpper.includes('KELAS') && !kelas) {
+                            kelas = val;
+                        } else if (keyUpper.includes('REGU') && !regu) {
+                            regu = val;
+                        }
+                    });
+                }
+                
+                if (idx < 3) {
+                    console.log(`Row ${idx}: nama="${nama}", nim="${nim}", kelas="${kelas}", regu="${regu}"`);
+                    console.log(`Row ${idx} allValues:`, allValues.slice(0, 10));
+                }
+
+                const processed = {
+                    nama: nama,
+                    nim: nim,
+                    kelas: kelas,
+                    regu: normalizeRegu(regu),
+                    raw: row
+                };
+
+                // Extract ALL links from ALL values in the row
+                const driveLinks = [];
+                const igLinks = [];
+                const tiktokLinks = [];
+                
+                allValues.forEach((val, idx) => {
+                    if (!val || typeof val !== 'string') return;
+                    const cleanVal = val.trim();
+                    if (!cleanVal) return;
+                    
+                    if (cleanVal.includes('drive.google.com')) {
+                        driveLinks.push(cleanVal);
+                    }
+                    if (cleanVal.includes('instagram.com')) {
+                        igLinks.push(cleanVal);
+                    }
+                    if (cleanVal.includes('tiktok.com') || cleanVal.includes('tiktok')) {
+                        tiktokLinks.push(cleanVal);
+                    }
+                });
+                
+                if (idx < 2) {
+                    console.log(`Row ${idx} links found: drive=${driveLinks.length}, ig=${igLinks.length}, tiktok=${tiktokLinks.length}`);
+                }
+
+                // Extract links based on section type
+                if (sectionId.includes('livereport')) {
+                    // Live report = screenshot dari drive
+                    processed.screenshot = driveLinks.length > 0 ? driveLinks[0] : '';
+                } else if (sectionId === 'penugasan_day0') {
+                    // Penugasan Day 0: Nametag (drive), Twibbon (drive), Link postingan (instagram)
+                    processed.nametag = driveLinks.length > 0 ? driveLinks[0] : '';
+                    processed.twibbon = driveLinks.length > 1 ? driveLinks[1] : '';
+                    processed.twibbon_link = igLinks.length > 0 ? igLinks[0] : '';
+                } else if (sectionId === 'penugasan_day1') {
+                    // Penugasan Day 1: Instagram individu, TikTok, Video kelompok (instagram)
+                    processed.instagram = igLinks.length > 0 ? igLinks[0] : '';
+                    processed.tiktok = tiktokLinks.length > 0 ? tiktokLinks[0] : '';
+                    processed.video_kelompok = igLinks.length > 1 ? igLinks[igLinks.length - 1] : '';
+                } else if (sectionId === 'penugasan_day2') {
+                    // Penugasan Day 2: Poster (drive), Video yel-yel (instagram)
+                    processed.poster = driveLinks.length > 0 ? driveLinks[0] : '';
+                    processed.yel_yel = igLinks.length > 0 ? igLinks[0] : '';
+                }
+
+                return processed;
+            }).filter(row => row.nama && row.nama.trim() !== '');
+        }
+
+        // Normalize regu name
+        function normalizeRegu(regu) {
+            if (!regu) return '';
+            let normalized = regu.trim();
+            // Handle variations like "Nephthys" vs "Nepthys"
+            if (normalized.toLowerCase().includes('nephthys')) {
+                normalized = normalized.replace(/nephthys/gi, 'Nepthys');
+            }
+            return normalized;
+        }
+
+        // Filter by legion
+        function filterByLegion() {
+            const selectedLegion = document.getElementById('legion-select').value;
+            
+            // Kalau belum pilih legion, tampilkan pesan untuk pilih dulu
+            if (!selectedLegion) {
+                document.getElementById('table-container').innerHTML = `
+                    <div class="empty-state">
+                        <h3>Pilih Legion dulu dong!</h3>
+                        <p>Pilih legion di dropdown di atas untuk lihat siapa aja yang udah ngumpul</p>
+                    </div>
+                `;
+                document.getElementById('count-badge').textContent = 'Pilih legion dulu ya!';
+                return;
+            }
+            
+            // Filter berdasarkan legion yang dipilih
+            const legionName = selectedLegion.toLowerCase().replace('legion of ', '');
+            const filteredData = currentData.filter(row => {
+                const rowRegu = row.regu.toLowerCase().replace('legion of ', '');
+                return rowRegu.includes(legionName) || legionName.includes(rowRegu);
+            });
+            
+            console.log('Selected legion:', selectedLegion);
+            console.log('Total data:', currentData.length);
+            console.log('Filtered data:', filteredData.length);
+            console.log('Sample regu values:', currentData.slice(0, 5).map(r => r.regu));
+
+            updateTable(filteredData, selectedLegion);
+        }
+
+        // Update table
+        function updateTable(data, selectedLegion) {
+            const container = document.getElementById('table-container');
+            const countBadge = document.getElementById('count-badge');
+
+            if (data.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3>Belum ada data nih!</h3>
+                        <p>${selectedLegion ? `Belum ada yang ngumpul dari ${selectedLegion}` : 'Belum ada submission'}</p>
+                    </div>
+                `;
+                countBadge.textContent = '0 orang ngumpul';
+                return;
+            }
+
+            countBadge.textContent = `Anjay! ${data.length} orang udah ngumpul!`;
+
+            // Get columns based on section type
+            const columns = getColumnsForSection(currentSection);
+
+            let tableHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>NIM</th>
+                            <th>Kelas</th>
+                            ${columns.map(col => `<th>${col.label}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            data.forEach((row, index) => {
+                tableHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${row.nama}</td>
+                        <td>${row.nim}</td>
+                        <td>${row.kelas}</td>
+                        ${columns.map(col => `<td>${formatLink(row[col.key])}</td>`).join('')}
+                    </tr>
+                `;
+            });
+
+            tableHTML += '</tbody></table>';
+            container.innerHTML = tableHTML;
+        }
+
+        // Get columns for each section
+        function getColumnsForSection(sectionId) {
+            switch(sectionId) {
+                case 'penugasan_day0':
+                    return [
+                        { key: 'nametag', label: 'Nametag' },
+                        { key: 'twibbon', label: 'Twibbon' },
+                        { key: 'twibbon_link', label: 'Link Postingan' }
+                    ];
+                case 'livereport_day1':
+                case 'livereport_day2':
+                case 'livereport_day3':
+                    return [
+                        { key: 'screenshot', label: 'Screenshot Live Report' }
+                    ];
+                case 'penugasan_day1':
+                    return [
+                        { key: 'instagram', label: 'Link Instagram' },
+                        { key: 'tiktok', label: 'Link TikTok' },
+                        { key: 'video_kelompok', label: 'Video Kelompok' }
+                    ];
+                case 'penugasan_day2':
+                    return [
+                        { key: 'poster', label: 'Poster Digital' },
+                        { key: 'yel_yel', label: 'Video Yel-Yel' }
+                    ];
+                default:
+                    return [];
+            }
+        }
+
+        // Format link
+        function formatLink(url) {
+            if (!url || url.trim() === '') {
+                return '<span style="opacity: 0.5">-</span>';
+            }
+            return `<a href="${url}" target="_blank" class="link-btn">Ini linknya ciks</a>`;
+        }
+
+        // Refresh data
+        async function refreshData() {
+            if (currentSection) {
+                document.getElementById('table-container').innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Refreshing data...</p>
+                    </div>
+                `;
+                await loadData(currentSection);
+            }
+        }
+
+        // Audio controls
+        let isPlaying = false;
+        const audio = document.getElementById('bg-music');
+        const audioBtn = document.getElementById('audio-btn');
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                audioBtn.textContent = '▶';
+            } else {
+                audio.play().catch(e => {
+                    alert('Maaf ciks, file musik belum ada. Tambahkan file "drop-dead.mp3" ke folder project ya!');
+                });
+                audioBtn.textContent = '⏸';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initMenu();
+        });
+    </script>
+</body>
+</html>
