@@ -399,46 +399,6 @@
             opacity: 0.7;
         }
 
-        /* Refresh Button */
-        .refresh-btn {
-            background: #27ae60;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9em;
-            margin-left: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .refresh-btn:hover {
-            background: #2ecc71;
-        }
-
-        .auto-refresh-indicator {
-            display: inline-block;
-            background: rgba(46, 204, 113, 0.3);
-            color: #2ecc71;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            margin-left: 10px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.6;
-            }
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             h1 {
@@ -497,9 +457,6 @@
                 <select id="legion-select" class="legion-select" onchange="filterByLegion()">
                     <option value="">-- Semua Legion --</option>
                 </select>
-
-                <button class="refresh-btn" onclick="refreshData()">🔄 Refresh Data</button>
-                <span class="auto-refresh-indicator" id="auto-refresh-indicator">⚡ Auto-refresh: ON (5s)</span>
 
                 <div class="count-badge" id="count-badge">
                     Loading...
@@ -617,7 +574,7 @@
                     <h3>${item.title}</h3>
                     <p>${item.desc}</p>
                     <span class="status-badge ${item.available ? 'status-available' : 'status-unavailable'}">
-                        ${item.available ? 'Data Ready!' : 'Belum mulai guys Day nya'}
+                        ${item.available ? 'udah bisa di cek' : 'Belum mulai guys Day nya'}
                     </span>
                 </div>
             `).join('');
@@ -1040,19 +997,6 @@
                 return '<span style="opacity: 0.5">-</span>';
             }
             return `<a href="${url}" target="_blank" class="link-btn">Ini linknya ciks</a>`;
-        }
-
-        // Refresh data
-        async function refreshData() {
-            if (currentSection) {
-                document.getElementById('table-container').innerHTML = `
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <p>Refreshing data...</p>
-                    </div>
-                `;
-                await loadData(currentSection);
-            }
         }
 
         // Audio controls with playlist
