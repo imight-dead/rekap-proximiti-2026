@@ -739,6 +739,48 @@
             pointer-events: none;
             z-index: -1;
         }
+
+        /* === LAYERED DETAIL: inner frame line + corner brackets + accents === */
+        .menu-card, .data-info, .table-container, .empty-state,
+        .audio-controls, .playlist-menu, .banner {
+            box-shadow:
+                inset 0 0 0 1px rgba(230,237,245,0.07),
+                0 12px 32px rgba(0,0,0,0.45);
+        }
+        .menu-card:hover {
+            box-shadow:
+                inset 0 0 0 1px rgba(74,144,194,0.3),
+                0 18px 44px rgba(0,0,0,0.55);
+        }
+
+        /* Blueprint corner brackets (top-right + bottom-left) */
+        .menu-card {
+            background-image:
+                linear-gradient(var(--moss), var(--moss)),
+                linear-gradient(var(--moss), var(--moss)),
+                linear-gradient(var(--moss), var(--moss)),
+                linear-gradient(var(--moss), var(--moss));
+            background-repeat: no-repeat;
+            background-size: 16px 2px, 2px 16px, 16px 2px, 2px 16px;
+            background-position:
+                top 13px right 13px, top 13px right 13px,
+                bottom 13px left 13px, bottom 13px left 13px;
+        }
+
+        /* Title accent underline */
+        .menu-card h3 { position: relative; padding-bottom: 9px; }
+        .menu-card h3::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: 0;
+            width: 26px; height: 2px;
+            background: var(--rust);
+        }
+
+        /* Hairline divider above the status badge */
+        .menu-card .status-badge {
+            margin-top: 14px;
+        }
     </style>
 </head>
 
