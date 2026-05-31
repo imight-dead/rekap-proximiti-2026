@@ -627,11 +627,31 @@
         }
 
         /* Torn Divider */
-        .torn-divider {
-            display: block;
-            width: 100%;
-            height: 20px;
-            margin: 24px 0;
+        .hdr-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            margin: 28px 0;
+        }
+        .hdr-divider::before,
+        .hdr-divider::after {
+            content: '';
+            flex: 1;
+            border-top: 2px dashed var(--line);
+        }
+        .hd-diamond {
+            width: 10px;
+            height: 10px;
+            transform: rotate(45deg);
+            flex: none;
+        }
+        .hd-diamond.hollow { border: 1.5px solid var(--ink); }
+        .hd-diamond.fill {
+            width: 13px;
+            height: 13px;
+            background: var(--rust);
+            box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.14);
         }
 
         /* Noise overlay */
@@ -1153,14 +1173,11 @@
                 <p class="subtitle">Information Technology - Telkom University</p>
             </header>
 
-            <svg aria-hidden="true" class="torn-divider" viewBox="0 0 680 28" preserveAspectRatio="none">
-                <path
-                    d="M0,14 Q17,4 34,16 Q51,26 68,12 Q85,2 102,17 Q119,28 136,13 Q153,2 170,18 Q187,27 204,12 Q221,1 238,16 Q255,28 272,11 Q289,0 306,15 Q323,27 340,13 Q357,2 374,17 Q391,28 408,12 Q425,1 442,16 Q459,27 476,11 Q493,0 510,14 Q527,26 544,12 Q561,2 578,17 Q595,28 612,13 Q629,2 646,16 Q663,27 680,14 L680,28 L0,28 Z"
-                    fill="#2a445f" opacity="0.5" />
-                <path
-                    d="M0,18 Q20,8 40,20 Q60,28 80,16 Q100,6 120,19 Q140,28 160,15 Q180,4 200,18 Q220,28 240,14 Q260,3 280,18 Q300,28 320,15 Q340,4 360,17 Q380,28 400,14 Q420,3 440,17 Q460,28 480,14 Q500,3 520,16 Q540,27 560,14 Q580,4 600,17 Q620,27 640,15 Q660,5 680,18 L680,28 L0,28 Z"
-                    fill="#c0392b" opacity="0.45" />
-            </svg>
+            <div class="hdr-divider" aria-hidden="true">
+                <span class="hd-diamond hollow"></span>
+                <span class="hd-diamond fill"></span>
+                <span class="hd-diamond hollow"></span>
+            </div>
 
             <div class="section-label">menu penugasan</div>
 
