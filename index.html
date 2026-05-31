@@ -5,7 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rekap Pengumpulan Penugasan PROXIMITI 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --ink: #1a1a1a;
+            --cream: #f5f0e8;
+            --rust: #c44b2b;
+            --moss: #3d5a3e;
+            --sand: #e8d5b0;
+            --pale: #f0ebe0;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,10 +23,10 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a2a3a 0%, #2d4a5e 50%, #3a5a7a 100%);
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--cream);
             min-height: 100vh;
-            color: #ffffff;
+            color: var(--ink);
         }
 
         .container {
@@ -33,20 +43,25 @@
         .banner {
             max-width: 100%;
             height: auto;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1.5px solid var(--ink);
+            box-shadow: 4px 4px 0 var(--ink);
             margin-bottom: 20px;
         }
 
         h1 {
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--ink);
             margin-bottom: 10px;
         }
 
         .subtitle {
-            font-size: 1.2em;
-            opacity: 0.9;
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--rust);
             margin-bottom: 30px;
         }
 
@@ -58,55 +73,99 @@
         }
 
         .menu-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 25px;
+            background: white;
+            padding: 18px 16px 16px 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.08s, box-shadow 0.08s;
+            border: 1.5px solid var(--ink);
+            box-shadow: 3px 3px 0 var(--ink);
+            position: relative;
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: var(--rust);
         }
 
         .menu-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transform: translate(-1px, -1px);
+            background: white;
+            box-shadow: 4px 4px 0 var(--ink);
+        }
+
+        .menu-card:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0 var(--ink);
         }
 
         .menu-card.disabled {
-            opacity: 0.5;
+            opacity: 0.45;
             cursor: not-allowed;
         }
 
         .menu-card.disabled:hover {
             transform: none;
-            background: rgba(255, 255, 255, 0.1);
+            background: white;
+            box-shadow: 3px 3px 0 var(--ink);
         }
 
         .menu-card h3 {
-            font-size: 1.3em;
-            margin-bottom: 10px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--ink);
         }
 
         .menu-card p {
-            opacity: 0.8;
-            font-size: 0.9em;
+            font-size: 0.85em;
+            color: #666;
         }
 
         .status-badge {
             display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75em;
+            padding: 4px 10px;
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border: 1.5px solid var(--ink);
             margin-top: 10px;
+            position: relative;
+            color: var(--cream);
+        }
+
+        .status-badge::after {
+            content: '';
+            position: absolute;
+            bottom: -3px; right: -3px;
+            width: 100%; height: 100%;
+            border: 1.5px solid var(--ink);
+            z-index: -1;
         }
 
         .status-available {
-            background: #27ae60;
+            background: var(--moss);
+            border-color: var(--moss);
+        }
+
+        .status-available::after {
+            background: #2a3f2b;
+            border-color: #2a3f2b;
         }
 
         .status-unavailable {
-            background: #e74c3c;
+            background: var(--rust);
+            border-color: var(--rust);
+        }
+
+        .status-unavailable::after {
+            background: #8b2e18;
+            border-color: #8b2e18;
         }
 
         /* Data View Section */
@@ -128,50 +187,90 @@
         }
 
         .back-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: var(--cream);
+            border: 2px solid var(--ink);
+            color: var(--ink);
+            padding: 10px 18px;
             cursor: pointer;
-            font-size: 1em;
             margin-bottom: 20px;
-            transition: all 0.3s ease;
+            box-shadow: 3px 3px 0 var(--ink);
+            transition: transform 0.08s, box-shadow 0.08s;
         }
 
         .back-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0 var(--ink);
+        }
+
+        .back-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0 var(--ink);
         }
 
         .legion-select {
             width: 100%;
             max-width: 400px;
-            padding: 15px;
-            border-radius: 10px;
-            border: none;
-            font-size: 1em;
-            background: rgba(255, 255, 255, 0.9);
-            color: #1a2a3a;
+            padding: 12px;
+            border: 1.5px solid var(--ink);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            background: white;
+            color: var(--ink);
             margin-bottom: 20px;
+            box-shadow: 2px 2px 0 var(--ink);
         }
 
         .data-info {
-            background: rgba(255, 255, 255, 0.1);
+            background: white;
             padding: 20px;
-            border-radius: 15px;
+            border: 1.5px solid var(--ink);
+            box-shadow: 3px 3px 0 var(--ink);
             margin-bottom: 20px;
+            position: relative;
+        }
+
+        .data-info::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: var(--rust);
         }
 
         .data-info h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
             margin-bottom: 10px;
         }
 
         .count-badge {
-            background: #27ae60;
-            padding: 8px 15px;
-            border-radius: 20px;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: var(--moss);
+            color: var(--cream);
+            padding: 6px 12px;
+            border: 1.5px solid var(--moss);
             display: inline-block;
             margin-top: 10px;
+            position: relative;
+        }
+
+        .count-badge::after {
+            content: '';
+            position: absolute;
+            bottom: -3px; right: -3px;
+            width: 100%; height: 100%;
+            background: #2a3f2b;
+            border: 1.5px solid #2a3f2b;
+            z-index: -1;
         }
 
         /* Loading */
@@ -181,13 +280,18 @@
         }
 
         .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #fff;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+            border: 3px solid var(--sand);
+            border-top: 3px solid var(--ink);
+            width: 32px;
+            height: 32px;
+            animation: spin 0.8s linear infinite;
             margin: 0 auto 20px;
+        }
+
+        .loading p {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: #888;
         }
 
         @keyframes spin {
@@ -203,9 +307,7 @@
         /* Table Styles */
         .table-container {
             overflow-x: auto;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 10px;
+            border: 1.5px solid var(--ink);
         }
 
         table {
@@ -216,36 +318,64 @@
 
         th,
         td {
-            padding: 15px;
+            padding: 10px 12px;
             text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--ink);
+            border-right: 1px solid rgba(0,0,0,0.08);
         }
 
         th {
-            background: rgba(255, 255, 255, 0.1);
-            font-weight: 600;
+            background: var(--ink);
+            color: var(--cream);
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        td {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+        }
+
+        tr:nth-child(odd) {
+            background: var(--pale);
+        }
+
+        tr:nth-child(even) {
+            background: white;
         }
 
         tr:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--sand);
         }
 
         .link-btn {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: var(--cream);
+            color: var(--ink);
+            padding: 6px 12px;
             text-decoration: none;
-            font-size: 0.85em;
             display: inline-block;
             margin: 3px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1.5px solid var(--ink);
+            box-shadow: 2px 2px 0 var(--ink);
+            transition: transform 0.08s, box-shadow 0.08s;
         }
 
         .link-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.5);
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0 var(--ink);
+        }
+
+        .link-btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0 var(--ink);
         }
 
         /* Audio Controls */
@@ -253,300 +383,245 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 12px 18px;
-            border-radius: 30px;
+            background: var(--ink);
+            padding: 10px 14px;
+            border: 1.5px solid var(--ink);
+            box-shadow: 3px 3px 0 var(--rust);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             z-index: 1000;
+            color: var(--cream);
         }
 
         .audio-controls button {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            background: transparent;
+            border: 1.5px solid var(--cream);
+            color: var(--cream);
+            width: 32px;
+            height: 32px;
             cursor: pointer;
-            font-size: 1em;
-            transition: all 0.3s ease;
+            font-size: 0.9em;
+            transition: all 0.08s;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .audio-controls button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
+            background: var(--cream);
+            color: var(--ink);
         }
 
         .audio-controls #audio-btn {
-            width: 42px;
-            height: 42px;
-            font-size: 1.2em;
+            width: 36px;
+            height: 36px;
+            font-size: 1.1em;
+            border-color: var(--rust);
         }
 
         .audio-controls span#song-title {
-            font-size: 0.8em;
-            max-width: 180px;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            max-width: 160px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             cursor: pointer;
+            color: var(--sand);
         }
 
         .audio-controls span#song-title:hover {
-            text-decoration: underline;
+            color: var(--cream);
         }
 
         /* Playlist Menu */
         .playlist-menu {
             display: none;
             position: absolute;
-            bottom: 60px;
+            bottom: 55px;
             right: 0;
-            background: rgba(30, 30, 30, 0.95);
-            border-radius: 15px;
-            padding: 10px 0;
-            min-width: 280px;
-            max-height: 300px;
+            background: var(--ink);
+            border: 1.5px solid var(--cream);
+            padding: 8px 0;
+            min-width: 260px;
+            max-height: 280px;
             overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 3px 3px 0 var(--rust);
         }
 
         .playlist-menu.show {
             display: block;
-            animation: slideUp 0.3s ease;
+            animation: slideUp 0.15s ease;
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .playlist-header {
-            padding: 10px 15px;
-            font-weight: bold;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 5px;
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--rust);
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 4px;
         }
 
         .playlist-item {
-            padding: 12px 15px;
+            padding: 8px 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.08s;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            color: var(--cream);
         }
 
         .playlist-item:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .playlist-item.active {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+            border-left: 3px solid var(--rust);
         }
 
         .playlist-item .song-number {
-            width: 24px;
-            height: 24px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            width: 20px;
+            height: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75em;
         }
 
         .playlist-item.active .song-number {
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
+            background: var(--rust);
+            border-color: var(--rust);
+            color: var(--cream);
         }
 
         .playlist-item .song-name {
             flex: 1;
-            font-size: 0.9em;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
         }
 
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
+            padding: 50px 20px;
+            background: white;
+            border: 1.5px solid var(--ink);
         }
 
         .empty-state h3 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: #888;
         }
 
         /* Footer */
         footer {
             text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-            opacity: 0.7;
+            padding: 24px 20px;
+            margin-top: 30px;
+            border-top: 1.5px solid var(--ink);
+        }
+
+        footer p {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #888;
+        }
+
+        /* Section Label */
+        .section-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--rust);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: repeating-linear-gradient(90deg, var(--ink) 0px, var(--ink) 4px, transparent 4px, transparent 8px);
+            opacity: 0.2;
+        }
+
+        /* Torn Divider */
+        .torn-divider {
+            display: block;
+            width: 100%;
+            height: 20px;
+            margin: 24px 0;
+        }
+
+        /* Noise overlay */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             h1 {
-                font-size: 1.8em;
+                font-size: 1.6em;
             }
 
             .menu-card {
-                padding: 20px;
+                padding: 16px 14px 14px 18px;
             }
 
             th,
             td {
-                padding: 10px;
-                font-size: 0.9em;
+                padding: 8px 10px;
+                font-size: 11px;
             }
 
             .audio-controls {
                 bottom: 10px;
                 right: 10px;
-                padding: 10px 15px;
+                padding: 8px 10px;
             }
 
             .audio-controls span {
                 display: none;
             }
         }
-
-        /* === ORGANIC / HANDCRAFTED TEXTURES === */
-
-        /* Grain overlay on body */
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            opacity: 0.06;
-            filter: url(#grain);
-            z-index: 9999;
-        }
-
-        /* Torn edge divider */
-        .torn-edge {
-            display: block;
-            width: 100%;
-            height: 25px;
-            color: rgba(255,255,255,0.04);
-            pointer-events: none;
-            margin: 30px 0;
-        }
-
-        /* Irregular border-radius + offset shadow on cards */
-        .menu-card {
-            border-radius: 8px 18px 12px 20px / 16px 10px 22px 8px;
-            box-shadow: 3px 4px 0px rgba(0,0,0,0.25);
-            position: relative;
-        }
-
-        .menu-card:hover {
-            box-shadow: 1px 2px 0px rgba(0,0,0,0.3);
-            transform: translateY(-2px);
-        }
-
-        /* Halftone dot overlay on cards */
-        .menu-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Ccircle cx='3' cy='3' r='0.7' fill='rgba(255,255,255,0.1)'/%3E%3C/svg%3E");
-            pointer-events: none;
-            opacity: 0.15;
-        }
-
-        /* Irregular badges */
-        .status-badge {
-            border-radius: 4px 12px 6px 14px / 10px 5px 13px 7px;
-            transform: rotate(-0.8deg);
-            border: 1.5px solid rgba(255,255,255,0.15);
-        }
-
-        .count-badge {
-            border-radius: 6px 14px 8px 16px / 12px 6px 14px 8px;
-            transform: rotate(0.5deg);
-            box-shadow: 2px 3px 0px rgba(0,0,0,0.2);
-        }
-
-        /* Irregular data-info container */
-        .data-info {
-            border-radius: 12px 20px 14px 18px / 18px 12px 20px 14px;
-            box-shadow: 3px 4px 0px rgba(0,0,0,0.2);
-        }
-
-        /* Irregular table container */
-        .table-container {
-            border-radius: 10px 18px 12px 16px / 14px 10px 18px 12px;
-            box-shadow: 3px 3px 0px rgba(0,0,0,0.15);
-        }
-
-        /* Buttons - handcrafted feel */
-        .back-btn {
-            border-radius: 6px 16px 10px 18px / 14px 8px 16px 10px;
-            box-shadow: 2px 3px 0px rgba(0,0,0,0.25);
-            transition: all 0.15s ease;
-        }
-
-        .back-btn:hover {
-            box-shadow: 1px 1px 0px rgba(0,0,0,0.3);
-            transform: translate(1px, 2px);
-        }
-
-        .link-btn {
-            border-radius: 4px 10px 6px 12px / 8px 5px 11px 6px;
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
-        }
-
-        .link-btn:hover {
-            box-shadow: 1px 1px 0px rgba(0,0,0,0.25);
-            transform: translate(1px, 1px);
-        }
-
-        /* Banner irregular radius */
-        .banner {
-            border-radius: 10px 20px 14px 18px / 16px 12px 20px 10px;
-            box-shadow: 4px 5px 0px rgba(0,0,0,0.3);
-        }
     </style>
 </head>
 
 <body>
-    <!-- SVG Defs for organic textures -->
-    <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
-        <defs>
-            <filter id="grain">
-                <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
-                <feColorMatrix type="saturate" values="0"/>
-                <feBlend in="SourceGraphic" mode="multiply"/>
-            </filter>
-            <pattern id="halftone" width="6" height="6" patternUnits="userSpaceOnUse">
-                <circle cx="3" cy="3" r="0.8" fill="rgba(255,255,255,0.12)"/>
-            </pattern>
-        </defs>
-    </svg>
-
-    <!-- Torn edge divider template -->
-    <svg aria-hidden="true" class="torn-edge" viewBox="0 0 1200 40" preserveAspectRatio="none">
-        <path d="M0,20 Q30,5 60,18 T120,22 T180,15 T240,20 T300,12 T360,22 T420,17 T480,25 T540,14 T600,20 T660,24 T720,16 T780,22 T840,13 T900,21 T960,18 T1020,24 T1080,15 T1140,20 T1200,18 L1200,40 L0,40 Z" fill="currentColor"/>
-    </svg>
+    <!-- Noise overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
 
     <div class="container">
         <!-- Home Section -->
@@ -557,9 +632,12 @@
                 <p class="subtitle">Information Technology - Telkom University</p>
             </header>
 
-            <svg aria-hidden="true" class="torn-edge" viewBox="0 0 1200 40" preserveAspectRatio="none">
-                <path d="M0,20 Q30,5 60,18 T120,22 T180,15 T240,20 T300,12 T360,22 T420,17 T480,25 T540,14 T600,20 T660,24 T720,16 T780,22 T840,13 T900,21 T960,18 T1020,24 T1080,15 T1140,20 T1200,18 L1200,40 L0,40 Z" fill="currentColor"/>
+            <svg aria-hidden="true" class="torn-divider" viewBox="0 0 680 28" preserveAspectRatio="none">
+                <path d="M0,14 Q17,4 34,16 Q51,26 68,12 Q85,2 102,17 Q119,28 136,13 Q153,2 170,18 Q187,27 204,12 Q221,1 238,16 Q255,28 272,11 Q289,0 306,15 Q323,27 340,13 Q357,2 374,17 Q391,28 408,12 Q425,1 442,16 Q459,27 476,11 Q493,0 510,14 Q527,26 544,12 Q561,2 578,17 Q595,28 612,13 Q629,2 646,16 Q663,27 680,14 L680,28 L0,28 Z" fill="#1a1a1a" opacity="0.12"/>
+                <path d="M0,18 Q20,8 40,20 Q60,28 80,16 Q100,6 120,19 Q140,28 160,15 Q180,4 200,18 Q220,28 240,14 Q260,3 280,18 Q300,28 320,15 Q340,4 360,17 Q380,28 400,14 Q420,3 440,17 Q460,28 480,14 Q500,3 520,16 Q540,27 560,14 Q580,4 600,17 Q620,27 640,15 Q660,5 680,18 L680,28 L0,28 Z" fill="#c44b2b" opacity="0.35"/>
             </svg>
+
+            <div class="section-label">menu penugasan</div>
 
             <div class="menu-grid" id="menu-grid">
                 <!-- Menu cards will be generated by JavaScript -->
@@ -568,14 +646,16 @@
 
         <!-- Data Section -->
         <section id="data-section" class="data-section">
-            <button class="back-btn" onclick="goHome()">← Balik ke Home</button>
+            <button class="back-btn" onclick="goHome()">← BALIK</button>
+
+            <div class="section-label">detail rekap</div>
 
             <div class="data-info">
                 <h2 id="section-title">Loading...</h2>
                 <p id="section-desc"></p>
 
-                <label for="legion-select" style="display: block; margin-top: 15px; margin-bottom: 8px;">
-                    Pilih Legion-nya nih:
+                <label for="legion-select" style="display:block;margin-top:15px;margin-bottom:8px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--rust)">
+                    Pilih Legion:
                 </label>
                 <select id="legion-select" class="legion-select" onchange="filterByLegion()">
                     <option value="">-- Semua Legion --</option>
