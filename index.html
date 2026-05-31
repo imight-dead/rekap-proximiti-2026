@@ -860,21 +860,25 @@
             position: absolute;
             inset: 0;
             border-radius: inherit;
-            background-image: var(--grain);
-            background-size: 150px 150px;
-            opacity: 0.3;
+            background-image: url("white-paper-texture_1194-2301.avif");
+            background-size: cover;
+            background-position: center;
+            mix-blend-mode: overlay;
+            opacity: 0.5;
             pointer-events: none;
             z-index: -1;
         }
 
-        /* Brutalist texture reveals on hovering an available card */
+        /* Paper texture reveals on hovering an available card */
         .menu-card::after {
             content: '';
             position: absolute;
             inset: 0;
             border-radius: inherit;
-            background-image: var(--grain);
-            background-size: 150px 150px;
+            background-image: url("white-paper-texture_1194-2301.avif");
+            background-size: cover;
+            background-position: center;
+            mix-blend-mode: overlay;
             opacity: 0;
             pointer-events: none;
             z-index: -1;
@@ -882,7 +886,7 @@
         }
 
         .menu-card:not(.disabled):hover::after {
-            opacity: 0.6;
+            opacity: 0.75;
         }
 
         /* === LAYERED DETAIL: inner frame line + corner brackets + accents === */
