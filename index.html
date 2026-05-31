@@ -1105,6 +1105,7 @@
                 e.preventDefault();
                 if ((await sha256(input.value)) === HASH) {
                     sessionStorage.setItem('proximiti_auth', '1');
+                    sessionStorage.setItem('proximiti_token', input.value);
                     document.body.style.overflow = '';
                     gate.remove();
                     if (window.__startMusic) window.__startMusic();
@@ -1242,40 +1243,25 @@
 
     <script>
         // Google Sheets IDs - fetch langsung dengan auto-refresh
-        const SPREADSHEET_IDS = {
-            penugasan_day0: '1adWCS5dCfgN1EvljzTq7NSzIssnxi242GR4EX9tWAs4',
-            livereport_day1: '1_GzSEtrx_20lwFsP-pOshE4vg2JoN9usFRpbM6-UZwY',
-            penugasan_day1: '1k2T0X8tGMRJnOOMHfwT4_2bN6JjFthArClm7QBW-ANs',
-            livereport_day2: '1fsMprvX29-LYlH8uixm4irwGnLY8ZMvewKtCRQtMoaU',
-            penugasan_day2: '1tYmL83-GddIeYzkgUZc1voToBljmruvRJcyfltiQdrc',
-            livereport_day3: '1rSGFXnr4ySlulKxHtKekv47LhbU-XZ0Sd6limS6gD14',
-            det: '10jlh0bcjIhPFZXUs6ZMSk1DJJGJOZ9DzlSaZNuzpBic',
-        };
+        // Data is fetched through a password-gated Apps Script proxy (API URL = REKAP_API below).
+        // Spreadsheet IDs are stored server-side in the Apps Script, NOT exposed in this client.
+        function getToken() {
+            return sessionStorage.getItem('proximiti_token') || '';
+        }
 
-        // Fallback ke local files
-        const CSV_FILES = {
-            penugasan_day0: 'data/penugasan_day0.csv',
-            livereport_day1: 'data/livereport_day1.csv',
-            penugasan_day1: 'data/penugasan_day1.csv',
-            livereport_day2: 'data/livereport_day2.csv',
-            penugasan_day2: 'data/penugasan_day2.csv',
-            livereport_day3: 'data/livereport_day3.csv',
-        };
-
-        let useLocalFiles = false; // Will switch to true if Google Sheets fails
-
-        function getSpreadsheetURL(sectionId, forceLocal = false) {
-            if (forceLocal || useLocalFiles) {
-                return { url: CSV_FILES[sectionId], isLocal: true };
+        // Convert a 2D values array (from the proxy) into the {headers, data} shape processData expects
+        function valuesToResult(values) {
+            if (!values || !values.length) return { headers: [], data: [] };
+            const headers = values[0].map((h, idx) => `${(h || '').toString().trim()}_COL${idx}`);
+            const data = [];
+            for (let i = 1; i < values.length; i++) {
+                const vals = (values[i] || []).map(v => v == null ? '' : String(v));
+                if (vals.every(v => v.trim() === '')) continue;
+                const row = { _allValues: vals };
+                headers.forEach((h, idx) => row[h] = vals[idx] || '');
+                data.push(row);
             }
-            const id = SPREADSHEET_IDS[sectionId];
-            if (!id) return null;
-            // Tambah timestamp untuk bypass cache
-            const timestamp = new Date().getTime();
-            return {
-                url: `https://docs.google.com/spreadsheets/d/${id}/export?format=csv&timestamp=${timestamp}`,
-                isLocal: false
-            };
+            return { headers, data };
         }
 
         // Auto-refresh setiap 5 detik
@@ -1391,33 +1377,14 @@
 
         // Fetch data from Google Sheets dengan fallback ke local
         async function fetchSheetData(sectionId) {
-            const urlInfo = getSpreadsheetURL(sectionId);
-            if (!urlInfo) return null;
-
+            if (!REKAP_API) return null;
             try {
-                console.log('Fetching from:', urlInfo.url);
-                const response = await fetch(urlInfo.url);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const csv = await response.text();
-
-                // Check if it's valid CSV (not HTML error page)
-                if (csv.includes('<!DOCTYPE') || csv.includes('<html')) {
-                    throw new Error('Received HTML instead of CSV');
-                }
-
-                console.log('CSV received, length:', csv.length);
-                return parseCSV(csv);
+                const res = await fetch(`${REKAP_API}?action=data&section=${encodeURIComponent(sectionId)}&token=${encodeURIComponent(getToken())}&t=${Date.now()}`);
+                const json = await res.json();
+                if (!json || json.error || !json.values) return null;
+                return valuesToResult(json.values);
             } catch (error) {
-                console.error('Error fetching from Google Sheets:', error);
-
-                // Fallback ke local files
-                if (!urlInfo.isLocal) {
-                    console.log('Falling back to local file...');
-                    useLocalFiles = true;
-                    return fetchSheetData(sectionId);
-                }
+                console.error('Error fetching data:', error);
                 return null;
             }
         }
@@ -1469,7 +1436,6 @@
             autoRefreshInterval = setInterval(async () => {
                 if (currentSection) {
                     console.log('Auto-refreshing data...');
-                    useLocalFiles = false; // Try Google Sheets first
                     await loadDataSilent(currentSection);
                 }
             }, 5000); // 5 detik
@@ -1788,7 +1754,7 @@
         async function fetchRekapStatuses() {
             if (!REKAP_API) return;
             try {
-                const res = await fetch(`${REKAP_API}?action=get&t=${Date.now()}`);
+                const res = await fetch(`${REKAP_API}?action=get&token=${encodeURIComponent(getToken())}&t=${Date.now()}`);
                 rekapStatusMap = await res.json();
             } catch (e) { /* keep last known statuses */ }
         }
@@ -1801,7 +1767,7 @@
             if (el) el.className = 'rekap-select ' + val;
             if (REKAP_API) {
                 rekapStatusMap[id] = val;
-                fetch(`${REKAP_API}?action=set&id=${encodeURIComponent(id)}&status=${val}`).catch(() => {});
+                fetch(`${REKAP_API}?action=set&id=${encodeURIComponent(id)}&status=${val}&token=${encodeURIComponent(getToken())}`).catch(() => {});
             } else {
                 localStorage.setItem('det_status_' + id, val);
             }
