@@ -946,50 +946,120 @@
             position: fixed;
             inset: 0;
             z-index: 100000;
-            background: var(--cream);
+            background: radial-gradient(circle at 50% 28%, #16304d, var(--cream) 72%);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
+        #pw-gate::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: var(--grain);
+            background-size: 150px 150px;
+            opacity: 0.22;
+            pointer-events: none;
+        }
         .pw-box {
+            position: relative;
+            overflow: hidden;
             background: var(--sand);
             border: 1.5px solid var(--line);
-            border-radius: 22px;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
-            padding: 32px 28px;
+            border-radius: 24px;
+            box-shadow: inset 0 0 0 1px rgba(230, 237, 245, 0.07), 0 20px 50px rgba(0, 0, 0, 0.55);
+            padding: 36px 30px;
             width: 100%;
-            max-width: 360px;
+            max-width: 380px;
             text-align: center;
             display: flex;
             flex-direction: column;
             gap: 14px;
         }
-        .pw-box h2 { font-weight: 800; letter-spacing: -0.02em; }
-        .pw-box p { font-size: 13px; color: rgba(230, 237, 245, 0.6); }
-        .pw-box input {
+        .pw-box::after {
+            content: '';
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 18px;
+            height: 18px;
+            border-top: 2px solid var(--moss);
+            border-right: 2px solid var(--moss);
+        }
+        .pw-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 4px;
+            border-radius: 16px;
+            background: var(--pale);
+            border: 1.5px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--moss);
+        }
+        .pw-icon svg { width: 26px; height: 26px; }
+        .pw-box h2 { font-weight: 800; letter-spacing: -0.02em; font-size: 1.45em; }
+        .pw-box p {
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--moss);
+            margin-bottom: 6px;
+        }
+        .pw-field { position: relative; }
+        .pw-field input {
+            width: 100%;
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 14px;
-            padding: 12px 14px;
+            padding: 13px 46px 13px 16px;
             border: 1.5px solid var(--line);
-            border-radius: 12px;
-            background: var(--pale);
+            border-radius: 14px;
+            background: var(--cream);
             color: var(--ink);
+            transition: border-color 0.2s;
         }
-        .pw-box button {
+        .pw-field input:focus { outline: none; border-color: var(--moss); }
+        #pw-toggle {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgba(230, 237, 245, 0.55);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #pw-toggle svg { width: 18px; height: 18px; }
+        #pw-toggle:hover { color: var(--ink); }
+        .pw-submit {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             font-size: 12px;
-            padding: 12px;
+            padding: 13px;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             background: var(--rust);
             color: var(--ink);
             cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+            transition: transform 0.15s, box-shadow 0.15s;
         }
-        #pw-error { color: var(--rust); font-size: 12px; min-height: 14px; font-weight: 700; }
+        .pw-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45); }
+        #pw-error { color: #ff6b6b; font-size: 12px; min-height: 14px; font-weight: 700; }
+        .pw-box.shake { animation: shake 0.4s; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-7px); }
+            40%, 80% { transform: translateX(7px); }
+        }
     </style>
 </head>
 
@@ -997,10 +1067,18 @@
     <!-- Password gate -->
     <div id="pw-gate">
         <form id="pw-form" class="pw-box">
+            <div class="pw-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
             <h2>PROXIMITI 2026</h2>
-            <p>Masukkan password untuk mengakses rekap</p>
-            <input id="pw-input" type="password" autocomplete="off" placeholder="Password" />
-            <button type="submit">Masuk</button>
+            <p>Rekap Pengumpulan Penugasan</p>
+            <div class="pw-field">
+                <input id="pw-input" type="password" autocomplete="off" placeholder="Masukkan password" />
+                <button type="button" id="pw-toggle" aria-label="Lihat password">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
+            <button type="submit" class="pw-submit">Masuk</button>
             <span id="pw-error"></span>
         </form>
     </div>
@@ -1013,6 +1091,12 @@
             const form = document.getElementById('pw-form');
             const input = document.getElementById('pw-input');
             const err = document.getElementById('pw-error');
+            const box = document.querySelector('.pw-box');
+            setTimeout(() => input.focus(), 100);
+            document.getElementById('pw-toggle').addEventListener('click', () => {
+                input.type = input.type === 'password' ? 'text' : 'password';
+                input.focus();
+            });
             async function sha256(s) {
                 const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
                 return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
@@ -1023,9 +1107,13 @@
                     sessionStorage.setItem('proximiti_auth', '1');
                     document.body.style.overflow = '';
                     gate.remove();
+                    if (window.__startMusic) window.__startMusic();
                 } else {
                     err.textContent = 'Password salah!';
                     input.value = '';
+                    box.classList.remove('shake');
+                    void box.offsetWidth;
+                    box.classList.add('shake');
                     input.focus();
                 }
             });
@@ -1874,22 +1962,27 @@
             // Preload first song so playback starts instantly (fix delay)
             loadSong(0);
 
-            // Try autoplay; if browser blocks it, start on first user interaction
-            const tryPlay = () => {
+            const startMusic = () => {
                 audio.play().then(() => {
                     isPlaying = true;
                     audioBtn.innerHTML = ICON_PAUSE;
                     audioBtn.setAttribute('aria-label', 'Jeda musik');
                 }).catch(() => {});
             };
-            tryPlay();
-            const kickstart = () => {
-                if (!isPlaying) tryPlay();
-                document.removeEventListener('pointerdown', kickstart);
-                document.removeEventListener('keydown', kickstart);
-            };
-            document.addEventListener('pointerdown', kickstart);
-            document.addEventListener('keydown', kickstart);
+            window.__startMusic = startMusic;
+
+            // Only play once unlocked. If already authenticated this session,
+            // start on first interaction; otherwise wait for the password gate.
+            if (sessionStorage.getItem('proximiti_auth') === '1') {
+                startMusic();
+                const kick = () => {
+                    if (!isPlaying) startMusic();
+                    document.removeEventListener('pointerdown', kick);
+                    document.removeEventListener('keydown', kick);
+                };
+                document.addEventListener('pointerdown', kick);
+                document.addEventListener('keydown', kick);
+            }
         });
     </script>
 </body>
