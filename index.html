@@ -1034,7 +1034,7 @@
     </footer>
 
     <!-- Background Music Playlist -->
-    <audio id="bg-music">
+    <audio id="bg-music" preload="auto">
     </audio>
 
     <script>
@@ -1682,6 +1682,26 @@
         document.addEventListener('DOMContentLoaded', () => {
             initMenu();
             initPlaylist();
+
+            // Preload first song so playback starts instantly (fix delay)
+            loadSong(0);
+
+            // Autoplay; if browser blocks it, start on first user interaction
+            const tryPlay = () => {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    audioBtn.innerHTML = ICON_PAUSE;
+                    audioBtn.setAttribute('aria-label', 'Jeda musik');
+                }).catch(() => {});
+            };
+            tryPlay();
+            const kickstart = () => {
+                if (!isPlaying) tryPlay();
+                document.removeEventListener('pointerdown', kickstart);
+                document.removeEventListener('keydown', kickstart);
+            };
+            document.addEventListener('pointerdown', kickstart);
+            document.addEventListener('keydown', kickstart);
         });
     </script>
 </body>
