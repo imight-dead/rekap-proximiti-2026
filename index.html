@@ -311,6 +311,14 @@
             margin: 0 auto 20px;
         }
 
+        .spinner-logo {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            display: block;
+            animation: spin 1.4s linear infinite;
+        }
+
         .loading p {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 11px;
@@ -1169,7 +1177,7 @@
                     <line x1="19" y1="12" x2="5" y2="12" />
                     <polyline points="12 19 5 12 12 5" />
                 </svg>
-                Balik
+                Back
             </button>
 
             <div class="section-label">detail rekap</div>
@@ -1407,7 +1415,7 @@
             // Show loading
             document.getElementById('table-container').innerHTML = `
                 <div class="loading">
-                    <div class="spinner"></div>
+                    <img src="logo-proximiti.png" class="spinner-logo" alt="Loading">
                     <p>Lagi ambil data dari spreadsheet nih, tunggu bentar...</p>
                 </div>
             `;
