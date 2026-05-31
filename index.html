@@ -18,6 +18,7 @@
             --line: #2a445f;
             --shadow: #040d18;
             --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='gamma' exponent='2.4'/%3E%3CfeFuncG type='gamma' exponent='2.4'/%3E%3CfeFuncB type='gamma' exponent='2.4'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            --paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
         }
 
         * {
@@ -724,14 +725,17 @@
         }
 
         /* Organic flowing lines behind content */
-        .bg-waves {
+        .paper-bg {
             position: fixed;
             inset: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.06;
+            background-image: var(--paper), var(--paper);
+            background-size: 180px 180px, 440px 440px;
+            background-repeat: repeat, repeat;
+            opacity: 0.35;
         }
 
         h1 {
@@ -1152,16 +1156,8 @@
     <div class="noise-overlay" aria-hidden="true"></div>
 
     <!-- Organic wavy background lines -->
-    <svg class="bg-waves" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M-20,170 C320,90 720,250 1100,150 C1280,105 1380,150 1460,120" fill="none" stroke="#e6edf5"
-            stroke-width="1.2" />
-        <path d="M-20,330 C300,250 700,400 1080,300 C1280,250 1380,300 1460,270" fill="none" stroke="#e6edf5"
-            stroke-width="1.2" />
-        <path d="M-20,520 C360,440 760,600 1140,500 C1300,460 1390,500 1460,480" fill="none" stroke="#e6edf5"
-            stroke-width="1.2" />
-        <path d="M-20,700 C320,620 720,780 1100,680 C1290,635 1380,680 1460,660" fill="none" stroke="#e6edf5"
-            stroke-width="1.2" />
-    </svg>
+    <!-- Paper texture background -->
+    <div class="paper-bg" aria-hidden="true"></div>
 
     <div class="container">
         <!-- Home Section -->
