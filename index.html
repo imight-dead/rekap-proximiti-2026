@@ -8,12 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ink: #1c2e3f;
-            --cream: #e8edf2;
-            --rust: #8b1a1a;
-            --moss: #3a5a7a;
-            --sand: #c4d1dc;
-            --pale: #f0f3f6;
+            --ink: #c8d4e0;
+            --cream: #162536;
+            --rust: #a63030;
+            --moss: #4a7fa3;
+            --sand: #1e3a52;
+            --pale: #1b3045;
         }
 
         * {
@@ -73,7 +73,7 @@
         }
 
         .menu-card {
-            background: white;
+            background: var(--sand);
             padding: 18px 16px 16px 20px;
             cursor: pointer;
             transition: transform 0.08s, box-shadow 0.08s;
@@ -92,7 +92,7 @@
 
         .menu-card:hover {
             transform: translate(-1px, -1px);
-            background: white;
+            background: var(--pale);
             box-shadow: 4px 4px 0 var(--ink);
         }
 
@@ -108,7 +108,7 @@
 
         .menu-card.disabled:hover {
             transform: none;
-            background: white;
+            background: var(--sand);
             box-shadow: 3px 3px 0 var(--ink);
         }
 
@@ -122,7 +122,7 @@
 
         .menu-card p {
             font-size: 0.85em;
-            color: #666;
+            color: rgba(200,212,224,0.6);
         }
 
         .status-badge {
@@ -154,8 +154,8 @@
         }
 
         .status-available::after {
-            background: #2a4560;
-            border-color: #2a4560;
+            background: #2d5a7a;
+            border-color: #2d5a7a;
         }
 
         .status-unavailable {
@@ -219,14 +219,14 @@
             border: 1.5px solid var(--ink);
             font-family: 'Space Grotesk', sans-serif;
             font-size: 13px;
-            background: white;
+            background: var(--pale);
             color: var(--ink);
             margin-bottom: 20px;
             box-shadow: 2px 2px 0 var(--ink);
         }
 
         .data-info {
-            background: white;
+            background: var(--sand);
             padding: 20px;
             border: 1.5px solid var(--ink);
             box-shadow: 3px 3px 0 var(--ink);
@@ -268,8 +268,8 @@
             position: absolute;
             bottom: -3px; right: -3px;
             width: 100%; height: 100%;
-            background: #2a4560;
-            border: 1.5px solid #2a4560;
+            background: #2d5a7a;
+            border: 1.5px solid #2d5a7a;
             z-index: -1;
         }
 
@@ -291,7 +291,7 @@
         .loading p {
             font-family: 'Space Mono', monospace;
             font-size: 11px;
-            color: #888;
+            color: rgba(200,212,224,0.5);
         }
 
         @keyframes spin {
@@ -321,7 +321,7 @@
             padding: 10px 12px;
             text-align: left;
             border-bottom: 1px solid var(--ink);
-            border-right: 1px solid rgba(0,0,0,0.08);
+            border-right: 1px solid rgba(200,212,224,0.1);
         }
 
         th {
@@ -344,7 +344,7 @@
         }
 
         tr:nth-child(even) {
-            background: white;
+            background: var(--sand);
         }
 
         tr:hover {
@@ -518,7 +518,7 @@
         .empty-state {
             text-align: center;
             padding: 50px 20px;
-            background: white;
+            background: var(--sand);
             border: 1.5px solid var(--ink);
         }
 
@@ -531,7 +531,7 @@
         .empty-state p {
             font-family: 'Space Mono', monospace;
             font-size: 11px;
-            color: #888;
+            color: rgba(200,212,224,0.5);
         }
 
         /* Footer */
@@ -547,7 +547,7 @@
             font-size: 10px;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #888;
+            color: rgba(200,212,224,0.5);
         }
 
         /* Section Label */
