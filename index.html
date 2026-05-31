@@ -1686,22 +1686,22 @@
             // Preload first song so playback starts instantly (fix delay)
             loadSong(0);
 
-            // Muted autoplay is allowed by browsers -> music starts immediately (silent),
-            // then unmutes automatically on the first user interaction (browser policy).
-            audio.muted = true;
-            const markPlaying = () => {
-                isPlaying = true;
-                audioBtn.innerHTML = ICON_PAUSE;
-                audioBtn.setAttribute('aria-label', 'Jeda musik');
+            // Try autoplay; if browser blocks it, start on first user interaction
+            const tryPlay = () => {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    audioBtn.innerHTML = ICON_PAUSE;
+                    audioBtn.setAttribute('aria-label', 'Jeda musik');
+                }).catch(() => {});
             };
-            audio.play().then(markPlaying).catch(() => {});
-
-            const unmute = () => {
-                audio.muted = false;
-                if (!isPlaying) audio.play().then(markPlaying).catch(() => {});
-                ['pointerdown', 'keydown', 'touchstart'].forEach(ev => document.removeEventListener(ev, unmute));
+            tryPlay();
+            const kickstart = () => {
+                if (!isPlaying) tryPlay();
+                document.removeEventListener('pointerdown', kickstart);
+                document.removeEventListener('keydown', kickstart);
             };
-            ['pointerdown', 'keydown', 'touchstart'].forEach(ev => document.addEventListener(ev, unmute));
+            document.addEventListener('pointerdown', kickstart);
+            document.addEventListener('keydown', kickstart);
         });
     </script>
 </body>
