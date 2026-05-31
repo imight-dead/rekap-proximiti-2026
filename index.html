@@ -913,6 +913,27 @@
         .menu-card .status-badge {
             margin-top: 14px;
         }
+
+        /* Status rekap dropdown (DET section) */
+        .rekap-select {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 10px;
+            border: 1.5px solid var(--line);
+            border-radius: 999px;
+            background: var(--pale);
+            color: var(--ink);
+            cursor: pointer;
+        }
+        .rekap-select.sudah {
+            background: var(--moss);
+            border-color: var(--moss);
+        }
+        .rekap-select.belum {
+            background: var(--rust);
+            border-color: var(--rust);
+        }
     </style>
 </head>
 
@@ -1046,6 +1067,7 @@
             livereport_day2: '1fsMprvX29-LYlH8uixm4irwGnLY8ZMvewKtCRQtMoaU',
             penugasan_day2: '1tYmL83-GddIeYzkgUZc1voToBljmruvRJcyfltiQdrc',
             livereport_day3: '1rSGFXnr4ySlulKxHtKekv47LhbU-XZ0Sd6limS6gD14',
+            det: '10jlh0bcjIhPFZXUs6ZMSk1DJJGJOZ9DzlSaZNuzpBic',
         };
 
         // Fallback ke local files
@@ -1085,6 +1107,7 @@
             { id: 'livereport_day2', title: 'Live Report Day 2', desc: 'Screenshot Story IG Live Report', available: true },
             { id: 'penugasan_day2', title: 'Penugasan Day 2', desc: 'Poster Digital & Video Yel-Yel', available: true },
             { id: 'livereport_day3', title: 'Live Report Day 3', desc: 'Screenshot Story IG Live Report', available: true },
+            { id: 'det', title: 'Laporan Kegiatan Eksternal', desc: 'DET - Laporan kegiatan eksternal peserta untuk tambahan poin', available: true },
             { id: 'livereport_day4', title: 'Live Report Day 4', desc: 'Coming soon...', available: false },
             { id: 'penugasan_day4', title: 'Penugasan Day 4', desc: 'Coming soon...', available: false },
             { id: 'livereport_day5', title: 'Live Report Day 5', desc: 'Coming soon...', available: false },
@@ -1391,7 +1414,23 @@
                 }
 
                 // Extract links based on section type
-                if (sectionId.includes('livereport')) {
+                if (sectionId === 'det') {
+                    // Find first filled activity block (8 cols starting at index 5)
+                    let b = -1;
+                    for (let i = 5; i < allValues.length; i += 8) {
+                        if (allValues[i] && allValues[i].trim() !== '') { b = i; break; }
+                    }
+                    if (b !== -1) {
+                        processed.jenis = allValues[b] || '';
+                        processed.namaKegiatan = allValues[b + 1] || '';
+                        processed.penyelenggara = allValues[b + 2] || '';
+                        const t1 = (allValues[b + 3] || '').trim();
+                        const t2 = (allValues[b + 4] || '').trim();
+                        processed.tanggal = t1 + (t2 && t2 !== t1 ? ' – ' + t2 : '');
+                        processed.bukti = (allValues[b + 5] || allValues[b + 6] || '').trim();
+                    }
+                    processed.id = ((allValues[0] || '') + '_' + nim).replace(/[^a-zA-Z0-9]/g, '');
+                } else if (sectionId.includes('livereport')) {
                     // Live report = screenshot dari drive
                     processed.screenshot = driveLinks.length > 0 ? driveLinks[0] : '';
                 } else if (sectionId === 'penugasan_day0') {
@@ -1498,7 +1537,7 @@
                         <td>${row.nama}</td>
                         <td>${row.nim}</td>
                         <td>${row.kelas}</td>
-                        ${columns.map(col => `<td>${formatLink(row[col.key])}</td>`).join('')}
+                        ${columns.map(col => `<td>${renderCell(col, row)}</td>`).join('')}
                     </tr>
                 `;
             });
@@ -1510,6 +1549,15 @@
         // Get columns for each section
         function getColumnsForSection(sectionId) {
             switch (sectionId) {
+                case 'det':
+                    return [
+                        { key: 'jenis', label: 'Jenis Kegiatan', type: 'text' },
+                        { key: 'namaKegiatan', label: 'Nama Kegiatan', type: 'text' },
+                        { key: 'penyelenggara', label: 'Penyelenggara', type: 'text' },
+                        { key: 'tanggal', label: 'Tanggal', type: 'text' },
+                        { key: 'bukti', label: 'Bukti', type: 'link' },
+                        { key: 'status', label: 'Status Rekap', type: 'status' }
+                    ];
                 case 'penugasan_day0':
                     return [
                         { key: 'nametag', label: 'Nametag' },
@@ -1536,6 +1584,32 @@
                 default:
                     return [];
             }
+        }
+
+        // Render a table cell by column type
+        function renderCell(col, row) {
+            if (col.type === 'status') return rekapDropdown(row.id);
+            if (col.type === 'text') {
+                const v = row[col.key];
+                return (v && v.trim() !== '') ? v : '<span style="opacity: 0.5">-</span>';
+            }
+            return formatLink(row[col.key]);
+        }
+
+        // Rekap status (persisted in browser localStorage)
+        function getRekapStatus(id) {
+            return localStorage.getItem('det_status_' + id) || 'belum';
+        }
+        function setRekapStatus(id, val, el) {
+            localStorage.setItem('det_status_' + id, val);
+            if (el) el.className = 'rekap-select ' + val;
+        }
+        function rekapDropdown(id) {
+            const cur = getRekapStatus(id);
+            return `<select class="rekap-select ${cur}" onchange="setRekapStatus('${id}', this.value, this)">
+                        <option value="belum" ${cur === 'belum' ? 'selected' : ''}>Belum direkap</option>
+                        <option value="sudah" ${cur === 'sudah' ? 'selected' : ''}>Sudah direkap</option>
+                    </select>`;
         }
 
         // Format link
