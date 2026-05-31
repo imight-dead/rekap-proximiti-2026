@@ -426,10 +426,128 @@
                 display: none;
             }
         }
+
+        /* === ORGANIC / HANDCRAFTED TEXTURES === */
+
+        /* Grain overlay on body */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.06;
+            filter: url(#grain);
+            z-index: 9999;
+        }
+
+        /* Torn edge divider */
+        .torn-edge {
+            display: block;
+            width: 100%;
+            height: 25px;
+            color: rgba(255,255,255,0.04);
+            pointer-events: none;
+            margin: 30px 0;
+        }
+
+        /* Irregular border-radius + offset shadow on cards */
+        .menu-card {
+            border-radius: 8px 18px 12px 20px / 16px 10px 22px 8px;
+            box-shadow: 3px 4px 0px rgba(0,0,0,0.25);
+            position: relative;
+        }
+
+        .menu-card:hover {
+            box-shadow: 1px 2px 0px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Halftone dot overlay on cards */
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Ccircle cx='3' cy='3' r='0.7' fill='rgba(255,255,255,0.1)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.15;
+        }
+
+        /* Irregular badges */
+        .status-badge {
+            border-radius: 4px 12px 6px 14px / 10px 5px 13px 7px;
+            transform: rotate(-0.8deg);
+            border: 1.5px solid rgba(255,255,255,0.15);
+        }
+
+        .count-badge {
+            border-radius: 6px 14px 8px 16px / 12px 6px 14px 8px;
+            transform: rotate(0.5deg);
+            box-shadow: 2px 3px 0px rgba(0,0,0,0.2);
+        }
+
+        /* Irregular data-info container */
+        .data-info {
+            border-radius: 12px 20px 14px 18px / 18px 12px 20px 14px;
+            box-shadow: 3px 4px 0px rgba(0,0,0,0.2);
+        }
+
+        /* Irregular table container */
+        .table-container {
+            border-radius: 10px 18px 12px 16px / 14px 10px 18px 12px;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.15);
+        }
+
+        /* Buttons - handcrafted feel */
+        .back-btn {
+            border-radius: 6px 16px 10px 18px / 14px 8px 16px 10px;
+            box-shadow: 2px 3px 0px rgba(0,0,0,0.25);
+            transition: all 0.15s ease;
+        }
+
+        .back-btn:hover {
+            box-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+            transform: translate(1px, 2px);
+        }
+
+        .link-btn {
+            border-radius: 4px 10px 6px 12px / 8px 5px 11px 6px;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+        }
+
+        .link-btn:hover {
+            box-shadow: 1px 1px 0px rgba(0,0,0,0.25);
+            transform: translate(1px, 1px);
+        }
+
+        /* Banner irregular radius */
+        .banner {
+            border-radius: 10px 20px 14px 18px / 16px 12px 20px 10px;
+            box-shadow: 4px 5px 0px rgba(0,0,0,0.3);
+        }
     </style>
 </head>
 
 <body>
+    <!-- SVG Defs for organic textures -->
+    <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+        <defs>
+            <filter id="grain">
+                <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+                <feColorMatrix type="saturate" values="0"/>
+                <feBlend in="SourceGraphic" mode="multiply"/>
+            </filter>
+            <pattern id="halftone" width="6" height="6" patternUnits="userSpaceOnUse">
+                <circle cx="3" cy="3" r="0.8" fill="rgba(255,255,255,0.12)"/>
+            </pattern>
+        </defs>
+    </svg>
+
+    <!-- Torn edge divider template -->
+    <svg aria-hidden="true" class="torn-edge" viewBox="0 0 1200 40" preserveAspectRatio="none">
+        <path d="M0,20 Q30,5 60,18 T120,22 T180,15 T240,20 T300,12 T360,22 T420,17 T480,25 T540,14 T600,20 T660,24 T720,16 T780,22 T840,13 T900,21 T960,18 T1020,24 T1080,15 T1140,20 T1200,18 L1200,40 L0,40 Z" fill="currentColor"/>
+    </svg>
+
     <div class="container">
         <!-- Home Section -->
         <section id="home-section">
@@ -438,6 +556,10 @@
                 <h1>Rekap Pengumpulan Penugasan PROXIMITI 2026</h1>
                 <p class="subtitle">Information Technology - Telkom University</p>
             </header>
+
+            <svg aria-hidden="true" class="torn-edge" viewBox="0 0 1200 40" preserveAspectRatio="none">
+                <path d="M0,20 Q30,5 60,18 T120,22 T180,15 T240,20 T300,12 T360,22 T420,17 T480,25 T540,14 T600,20 T660,24 T720,16 T780,22 T840,13 T900,21 T960,18 T1020,24 T1080,15 T1140,20 T1200,18 L1200,40 L0,40 Z" fill="currentColor"/>
+            </svg>
 
             <div class="menu-grid" id="menu-grid">
                 <!-- Menu cards will be generated by JavaScript -->
