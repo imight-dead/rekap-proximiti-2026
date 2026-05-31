@@ -940,10 +940,98 @@
         td:nth-child(3), td:nth-child(4) {
             white-space: nowrap;
         }
+
+        /* Password gate */
+        #pw-gate {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .pw-box {
+            background: var(--sand);
+            border: 1.5px solid var(--line);
+            border-radius: 22px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+            padding: 32px 28px;
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .pw-box h2 { font-weight: 800; letter-spacing: -0.02em; }
+        .pw-box p { font-size: 13px; color: rgba(230, 237, 245, 0.6); }
+        .pw-box input {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            padding: 12px 14px;
+            border: 1.5px solid var(--line);
+            border-radius: 12px;
+            background: var(--pale);
+            color: var(--ink);
+        }
+        .pw-box button {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 12px;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: var(--rust);
+            color: var(--ink);
+            cursor: pointer;
+        }
+        #pw-error { color: var(--rust); font-size: 12px; min-height: 14px; font-weight: 700; }
     </style>
 </head>
 
 <body>
+    <!-- Password gate -->
+    <div id="pw-gate">
+        <form id="pw-form" class="pw-box">
+            <h2>PROXIMITI 2026</h2>
+            <p>Masukkan password untuk mengakses rekap</p>
+            <input id="pw-input" type="password" autocomplete="off" placeholder="Password" />
+            <button type="submit">Masuk</button>
+            <span id="pw-error"></span>
+        </form>
+    </div>
+    <script>
+        (function () {
+            const HASH = '3be367f1bfc467faf66ad1d48dfbe8c94592eb1a0546eb82ac932457286c07ee';
+            const gate = document.getElementById('pw-gate');
+            if (sessionStorage.getItem('proximiti_auth') === '1') { gate.remove(); return; }
+            document.body.style.overflow = 'hidden';
+            const form = document.getElementById('pw-form');
+            const input = document.getElementById('pw-input');
+            const err = document.getElementById('pw-error');
+            async function sha256(s) {
+                const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+                return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+            }
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if ((await sha256(input.value)) === HASH) {
+                    sessionStorage.setItem('proximiti_auth', '1');
+                    document.body.style.overflow = '';
+                    gate.remove();
+                } else {
+                    err.textContent = 'Password salah!';
+                    input.value = '';
+                    input.focus();
+                }
+            });
+        })();
+    </script>
+
     <!-- Noise overlay -->
     <div class="noise-overlay" aria-hidden="true"></div>
 
