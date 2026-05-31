@@ -1748,7 +1748,9 @@
 
         // Rekap status. Set REKAP_API to your deployed Google Apps Script Web App URL
         // for cross-device sync. If left empty, falls back to per-browser localStorage.
-        const REKAP_API = 'https://script.google.com/macros/s/AKfycbyU4Ldg70HnULe5kAtzbsHlFdL6Nm0ssQU000jQEhnfC4PLRDxpB-uatWh79zteUCfb9w/exec';
+        // NOTE: this only hides the URL from plain "View Source". It is NOT real security —
+        // the URL still appears in the Network tab. Real protection = the password token below.
+        const REKAP_API = atob('aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5VTRMZGc3MEhuVUxlNWtBdHpic0hsRmRMNk5tMHNzUVUwMDBqUUVobmZDNFBMUkR4cEItdWF0V2g3OXp0ZVVDZmI5dy9leGVj');
         let rekapStatusMap = {};
 
         async function fetchRekapStatuses() {
