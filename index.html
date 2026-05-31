@@ -733,22 +733,18 @@
             position: absolute;
             inset: 0;
             border-radius: inherit;
-            background-image: var(--grain);
-            background-size: 140px 140px;
-            opacity: 0.4;
+            background-image: var(--grain), var(--grain);
+            background-size: 140px 140px, 300px 300px;
+            background-repeat: repeat, repeat;
+            opacity: 0.36;
             pointer-events: none;
             z-index: -1;
-            animation: sandWind 16s ease-in-out infinite;
+            animation: sandWind 18s linear infinite;
         }
 
         @keyframes sandWind {
-            0%   { background-position: 0 0;        opacity: 0.30; }
-            15%  { background-position: -64px -7px; opacity: 0.50; }
-            30%  { background-position: -88px 5px;  opacity: 0.34; }
-            50%  { background-position: -172px -9px;opacity: 0.55; }
-            66%  { background-position: -202px 6px; opacity: 0.33; }
-            85%  { background-position: -256px -5px;opacity: 0.48; }
-            100% { background-position: -280px 0;   opacity: 0.30; }
+            from { background-position: 0 0, 0 0; }
+            to   { background-position: 0 0, -300px 0; }
         }
 
         /* === LAYERED DETAIL: inner frame line + corner brackets + accents === */
