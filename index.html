@@ -1313,6 +1313,7 @@
 
             rawData = result.data;
             currentData = processData(result, sectionId);
+            if (sectionId === 'det') await fetchRekapStatuses();
             filterByLegion();
         }
 
@@ -1333,6 +1334,7 @@
 
             rawData = result.data;
             currentData = processData(result, sectionId);
+            if (sectionId === 'det') await fetchRekapStatuses();
             filterByLegion();
         }
 
@@ -1597,13 +1599,31 @@
             return formatLink(row[col.key]);
         }
 
-        // Rekap status (persisted in browser localStorage)
+        // Rekap status. Set REKAP_API to your deployed Google Apps Script Web App URL
+        // for cross-device sync. If left empty, falls back to per-browser localStorage.
+        const REKAP_API = '';
+        let rekapStatusMap = {};
+
+        async function fetchRekapStatuses() {
+            if (!REKAP_API) return;
+            try {
+                const res = await fetch(`${REKAP_API}?action=get&t=${Date.now()}`);
+                rekapStatusMap = await res.json();
+            } catch (e) { /* keep last known statuses */ }
+        }
+
         function getRekapStatus(id) {
+            if (REKAP_API) return rekapStatusMap[id] || 'belum';
             return localStorage.getItem('det_status_' + id) || 'belum';
         }
         function setRekapStatus(id, val, el) {
-            localStorage.setItem('det_status_' + id, val);
             if (el) el.className = 'rekap-select ' + val;
+            if (REKAP_API) {
+                rekapStatusMap[id] = val;
+                fetch(`${REKAP_API}?action=set&id=${encodeURIComponent(id)}&status=${val}`).catch(() => {});
+            } else {
+                localStorage.setItem('det_status_' + id, val);
+            }
         }
         function rekapDropdown(id) {
             const cur = getRekapStatus(id);
