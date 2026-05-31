@@ -5,18 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rekap Pengumpulan Penugasan PROXIMITI 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --ink: #e6edf5;
             --cream: #0a1623;
-            --rust: #c0392b;
-            --moss: #4a90c2;
+            --rust: #7d0c00;
+            --moss: #104f7b;
             --sand: #13243a;
             --pale: #182d46;
             --line: #2a445f;
             --shadow: #040d18;
-            --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='gamma' exponent='2.4'/%3E%3CfeFuncG type='gamma' exponent='2.4'/%3E%3CfeFuncB type='gamma' exponent='2.4'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
         * {
@@ -57,7 +58,7 @@
             font-weight: 700;
             color: var(--ink);
             margin-bottom: 10px;
-            text-shadow: 0 0 18px rgba(74,144,194,0.35);
+            text-shadow: 0 0 18px rgba(74, 144, 194, 0.35);
         }
 
         .subtitle {
@@ -89,8 +90,10 @@
         .menu-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0;
-            width: 4px; height: 100%;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
             background: var(--rust);
         }
 
@@ -126,7 +129,7 @@
 
         .menu-card p {
             font-size: 0.85em;
-            color: rgba(200,212,224,0.6);
+            color: rgba(200, 212, 224, 0.6);
         }
 
         .status-badge {
@@ -146,8 +149,10 @@
         .status-badge::after {
             content: '';
             position: absolute;
-            bottom: -3px; right: -3px;
-            width: 100%; height: 100%;
+            bottom: -3px;
+            right: -3px;
+            width: 100%;
+            height: 100%;
             border: 1.5px solid var(--line);
             z-index: -1;
         }
@@ -250,8 +255,10 @@
         .data-info::before {
             content: '';
             position: absolute;
-            top: 0; left: 0;
-            width: 4px; height: 100%;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
             background: var(--rust);
         }
 
@@ -279,8 +286,10 @@
         .count-badge::after {
             content: '';
             position: absolute;
-            bottom: -3px; right: -3px;
-            width: 100%; height: 100%;
+            bottom: -3px;
+            right: -3px;
+            width: 100%;
+            height: 100%;
             background: #2d5a7a;
             border: 1.5px solid #2d5a7a;
             z-index: -1;
@@ -304,7 +313,7 @@
         .loading p {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 11px;
-            color: rgba(200,212,224,0.5);
+            color: rgba(200, 212, 224, 0.5);
         }
 
         @keyframes spin {
@@ -334,7 +343,7 @@
             padding: 10px 12px;
             text-align: left;
             border-bottom: 1px solid var(--line);
-            border-right: 1px solid rgba(200,212,224,0.1);
+            border-right: 1px solid rgba(200, 212, 224, 0.1);
         }
 
         th {
@@ -457,7 +466,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             cursor: pointer;
-            color: rgba(230,237,245,0.65);
+            color: rgba(230, 237, 245, 0.65);
             transition: color 0.2s;
         }
 
@@ -486,8 +495,15 @@
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .playlist-header {
@@ -498,7 +514,7 @@
             text-transform: uppercase;
             color: var(--rust);
             padding: 8px 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 4px;
         }
 
@@ -526,7 +542,7 @@
             font-size: 9px;
             width: 20px;
             height: 20px;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -561,7 +577,7 @@
         .empty-state p {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 11px;
-            color: rgba(200,212,224,0.5);
+            color: rgba(200, 212, 224, 0.5);
         }
 
         /* Footer */
@@ -577,7 +593,7 @@
             font-size: 10px;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: rgba(200,212,224,0.5);
+            color: rgba(200, 212, 224, 0.5);
         }
 
         /* Section Label */
@@ -648,7 +664,11 @@
         }
 
         /* === ACCESSIBILITY (UI/UX Pro Max checklist) === */
-        a, button, select, .menu-card, #song-title {
+        a,
+        button,
+        select,
+        .menu-card,
+        #song-title {
             cursor: pointer;
         }
 
@@ -666,7 +686,10 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
+
+            *,
+            *::before,
+            *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
@@ -675,10 +698,15 @@
         }
 
         /* === REFERENCE RESTYLE: textured, rounded, soft === */
-        .container { position: relative; z-index: 1; }
+        .container {
+            position: relative;
+            z-index: 1;
+        }
 
         /* Grain now per-shape, not full-screen */
-        .noise-overlay { display: none; }
+        .noise-overlay {
+            display: none;
+        }
 
         /* Organic flowing lines behind content */
         .bg-waves {
@@ -697,67 +725,161 @@
         }
 
         /* Rounded shapes */
-        .banner { border-radius: 22px; }
-        .menu-card, .data-info, .empty-state { border-radius: 22px; overflow: hidden; }
-        .table-container { border-radius: 18px; overflow: hidden; }
-        .audio-controls { border-radius: 20px; }
-        .playlist-menu { border-radius: 16px; }
-        .audio-controls button { border-radius: 12px; }
-        .audio-controls #audio-btn { border-radius: 14px; }
-        .status-badge, .count-badge { border-radius: 999px; }
-        .back-btn, .link-btn, .legion-select { border-radius: 12px; }
+        .banner {
+            border-radius: 22px;
+        }
+
+        .menu-card,
+        .data-info,
+        .empty-state {
+            border-radius: 22px;
+            overflow: hidden;
+        }
+
+        .table-container {
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .audio-controls {
+            border-radius: 20px;
+        }
+
+        .playlist-menu {
+            border-radius: 16px;
+        }
+
+        .audio-controls button {
+            border-radius: 12px;
+        }
+
+        .audio-controls #audio-btn {
+            border-radius: 14px;
+        }
+
+        .status-badge,
+        .count-badge {
+            border-radius: 999px;
+        }
+
+        .back-btn,
+        .link-btn,
+        .legion-select {
+            border-radius: 12px;
+        }
 
         /* Soft depth instead of hard offset */
-        .menu-card, .data-info, .table-container, .empty-state,
-        .audio-controls, .playlist-menu, .banner {
-            box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+        .menu-card,
+        .data-info,
+        .table-container,
+        .empty-state,
+        .audio-controls,
+        .playlist-menu,
+        .banner {
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
         }
-        .menu-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
-        .menu-card:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,0.55); }
-        .menu-card:active { transform: translateY(-1px); }
-        .back-btn, .link-btn { box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
-        .back-btn:hover, .link-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.42); }
-        .back-btn:active, .link-btn:active { transform: translateY(0); box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
+
+        .menu-card {
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.55);
+        }
+
+        .menu-card:active {
+            transform: translateY(-1px);
+        }
+
+        .back-btn,
+        .link-btn {
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-btn:hover,
+        .link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.42);
+        }
+
+        .back-btn:active,
+        .link-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
 
         /* Badges: drop hard-offset pseudo, soft pill */
-        .status-badge::after, .count-badge::after { display: none; }
-        .count-badge { display: none; }
+        .status-badge::after,
+        .count-badge::after {
+            display: none;
+        }
+
+        .count-badge {
+            display: none;
+        }
 
         /* Grain texture on each shape surface (behind content) */
-        .table-container, .empty-state, .back-btn, .link-btn { position: relative; }
+        .table-container,
+        .empty-state,
+        .back-btn,
+        .link-btn {
+            position: relative;
+        }
 
-        .menu-card::after, .data-info::after, .table-container::after,
-        .empty-state::after, .audio-controls::after, .playlist-menu::after,
-        .back-btn::after, .link-btn::after {
+        .data-info::after,
+        .table-container::after,
+        .empty-state::after,
+        .audio-controls::after,
+        .playlist-menu::after,
+        .back-btn::after,
+        .link-btn::after {
             content: '';
             position: absolute;
             inset: 0;
             border-radius: inherit;
-            background-image: var(--grain), var(--grain);
-            background-size: 140px 140px, 300px 300px;
-            background-repeat: repeat, repeat;
-            opacity: 0.36;
+            background-image: var(--grain);
+            background-size: 150px 150px;
+            opacity: 0.3;
             pointer-events: none;
             z-index: -1;
-            animation: sandWind 18s linear infinite;
         }
 
-        @keyframes sandWind {
-            from { background-position: 0 0, 0 0; }
-            to   { background-position: 0 0, -300px 0; }
+        /* Brutalist texture reveals on hovering an available card */
+        .menu-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background-image: var(--grain);
+            background-size: 150px 150px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1;
+            transition: opacity 0.25s ease;
+        }
+
+        .menu-card:not(.disabled):hover::after {
+            opacity: 0.6;
         }
 
         /* === LAYERED DETAIL: inner frame line + corner brackets + accents === */
-        .menu-card, .data-info, .table-container, .empty-state,
-        .audio-controls, .playlist-menu, .banner {
+        .menu-card,
+        .data-info,
+        .table-container,
+        .empty-state,
+        .audio-controls,
+        .playlist-menu,
+        .banner {
             box-shadow:
-                inset 0 0 0 1px rgba(230,237,245,0.07),
-                0 12px 32px rgba(0,0,0,0.45);
+                inset 0 0 0 1px rgba(230, 237, 245, 0.07),
+                0 12px 32px rgba(0, 0, 0, 0.45);
         }
+
         .menu-card:hover {
             box-shadow:
-                inset 0 0 0 1px rgba(74,144,194,0.3),
-                0 18px 44px rgba(0,0,0,0.55);
+                inset 0 0 0 1px rgba(74, 144, 194, 0.3),
+                0 18px 44px rgba(0, 0, 0, 0.55);
         }
 
         /* Blueprint corner brackets (top-right + bottom-left) */
@@ -772,12 +894,18 @@
         }
 
         /* Title accent underline */
-        .menu-card h3 { position: relative; padding-bottom: 9px; }
+        .menu-card h3 {
+            position: relative;
+            padding-bottom: 9px;
+        }
+
         .menu-card h3::after {
             content: '';
             position: absolute;
-            left: 0; bottom: 0;
-            width: 26px; height: 2px;
+            left: 0;
+            bottom: 0;
+            width: 26px;
+            height: 2px;
             background: var(--rust);
         }
 
@@ -794,10 +922,14 @@
 
     <!-- Organic wavy background lines -->
     <svg class="bg-waves" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M-20,170 C320,90 720,250 1100,150 C1280,105 1380,150 1460,120" fill="none" stroke="#e6edf5" stroke-width="1.2"/>
-        <path d="M-20,330 C300,250 700,400 1080,300 C1280,250 1380,300 1460,270" fill="none" stroke="#e6edf5" stroke-width="1.2"/>
-        <path d="M-20,520 C360,440 760,600 1140,500 C1300,460 1390,500 1460,480" fill="none" stroke="#e6edf5" stroke-width="1.2"/>
-        <path d="M-20,700 C320,620 720,780 1100,680 C1290,635 1380,680 1460,660" fill="none" stroke="#e6edf5" stroke-width="1.2"/>
+        <path d="M-20,170 C320,90 720,250 1100,150 C1280,105 1380,150 1460,120" fill="none" stroke="#e6edf5"
+            stroke-width="1.2" />
+        <path d="M-20,330 C300,250 700,400 1080,300 C1280,250 1380,300 1460,270" fill="none" stroke="#e6edf5"
+            stroke-width="1.2" />
+        <path d="M-20,520 C360,440 760,600 1140,500 C1300,460 1390,500 1460,480" fill="none" stroke="#e6edf5"
+            stroke-width="1.2" />
+        <path d="M-20,700 C320,620 720,780 1100,680 C1290,635 1380,680 1460,660" fill="none" stroke="#e6edf5"
+            stroke-width="1.2" />
     </svg>
 
     <div class="container">
@@ -810,8 +942,12 @@
             </header>
 
             <svg aria-hidden="true" class="torn-divider" viewBox="0 0 680 28" preserveAspectRatio="none">
-                <path d="M0,14 Q17,4 34,16 Q51,26 68,12 Q85,2 102,17 Q119,28 136,13 Q153,2 170,18 Q187,27 204,12 Q221,1 238,16 Q255,28 272,11 Q289,0 306,15 Q323,27 340,13 Q357,2 374,17 Q391,28 408,12 Q425,1 442,16 Q459,27 476,11 Q493,0 510,14 Q527,26 544,12 Q561,2 578,17 Q595,28 612,13 Q629,2 646,16 Q663,27 680,14 L680,28 L0,28 Z" fill="#2a445f" opacity="0.5"/>
-                <path d="M0,18 Q20,8 40,20 Q60,28 80,16 Q100,6 120,19 Q140,28 160,15 Q180,4 200,18 Q220,28 240,14 Q260,3 280,18 Q300,28 320,15 Q340,4 360,17 Q380,28 400,14 Q420,3 440,17 Q460,28 480,14 Q500,3 520,16 Q540,27 560,14 Q580,4 600,17 Q620,27 640,15 Q660,5 680,18 L680,28 L0,28 Z" fill="#c0392b" opacity="0.45"/>
+                <path
+                    d="M0,14 Q17,4 34,16 Q51,26 68,12 Q85,2 102,17 Q119,28 136,13 Q153,2 170,18 Q187,27 204,12 Q221,1 238,16 Q255,28 272,11 Q289,0 306,15 Q323,27 340,13 Q357,2 374,17 Q391,28 408,12 Q425,1 442,16 Q459,27 476,11 Q493,0 510,14 Q527,26 544,12 Q561,2 578,17 Q595,28 612,13 Q629,2 646,16 Q663,27 680,14 L680,28 L0,28 Z"
+                    fill="#2a445f" opacity="0.5" />
+                <path
+                    d="M0,18 Q20,8 40,20 Q60,28 80,16 Q100,6 120,19 Q140,28 160,15 Q180,4 200,18 Q220,28 240,14 Q260,3 280,18 Q300,28 320,15 Q340,4 360,17 Q380,28 400,14 Q420,3 440,17 Q460,28 480,14 Q500,3 520,16 Q540,27 560,14 Q580,4 600,17 Q620,27 640,15 Q660,5 680,18 L680,28 L0,28 Z"
+                    fill="#c0392b" opacity="0.45" />
             </svg>
 
             <div class="section-label">menu penugasan</div>
@@ -824,7 +960,11 @@
         <!-- Data Section -->
         <section id="data-section" class="data-section">
             <button class="back-btn" onclick="goHome()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <line x1="19" y1="12" x2="5" y2="12" />
+                    <polyline points="12 19 5 12 12 5" />
+                </svg>
                 Balik
             </button>
 
@@ -834,7 +974,8 @@
                 <h2 id="section-title">Loading...</h2>
                 <p id="section-desc"></p>
 
-                <label for="legion-select" style="display:block;margin-top:15px;margin-bottom:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--rust)">
+                <label for="legion-select"
+                    style="display:block;margin-top:15px;margin-bottom:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--rust)">
                     Pilih Legion:
                 </label>
                 <select id="legion-select" class="legion-select" onchange="filterByLegion()">
@@ -855,16 +996,27 @@
     <!-- Audio Controls -->
     <div class="audio-controls">
         <button id="menu-btn" onclick="togglePlaylist()" aria-label="Buka playlist">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <line x1="4" y1="6" x2="20" y2="6" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="18" x2="20" y2="18" />
+            </svg>
         </button>
         <button id="prev-btn" onclick="prevSong()" aria-label="Lagu sebelumnya">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
+            </svg>
         </button>
         <button id="audio-btn" onclick="toggleAudio()" aria-label="Putar musik">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+            </svg>
         </button>
         <button id="next-btn" onclick="nextSong()" aria-label="Lagu berikutnya">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 6h2v12h-2zm-2 6L5.5 6v12z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M16 6h2v12h-2zm-2 6L5.5 6v12z" />
+            </svg>
         </button>
         <span id="song-title" onclick="togglePlaylist()">Drop Dead - Olivia Rodrigo</span>
 
