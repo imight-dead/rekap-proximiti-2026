@@ -738,6 +738,12 @@
             opacity: 0.4;
             pointer-events: none;
             z-index: -1;
+            animation: sandDrift 22s linear infinite;
+        }
+
+        @keyframes sandDrift {
+            from { background-position: 0 0; }
+            to { background-position: 140px 140px; }
         }
 
         /* === LAYERED DETAIL: inner frame line + corner brackets + accents === */
