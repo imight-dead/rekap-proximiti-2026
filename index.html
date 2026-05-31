@@ -635,10 +635,8 @@
             overflow: hidden;
             background-color: var(--sand);
             background-image: repeating-linear-gradient(-45deg,
-                var(--rust) 0 15px,
-                rgba(230, 237, 245, 0.85) 15px 17px,
-                var(--moss) 17px 32px,
-                rgba(230, 237, 245, 0.85) 32px 34px);
+                #05080d 0 16px,
+                transparent 16px 32px);
             box-shadow: inset 0 0 0 1px rgba(230, 237, 245, 0.06);
         }
 
@@ -953,9 +951,22 @@
         }
 
         /* Keep code columns (NIM, Kelas) on one line */
-        td:nth-child(3), td:nth-child(4) {
+        /* No column: narrow (max 2 digits) + centered */
+        th:first-child, td:first-child {
+            width: 1%;
             white-space: nowrap;
+            text-align: center;
+            padding-left: 8px;
+            padding-right: 8px;
         }
+        /* NIM & Kelas: one line + centered */
+        th:nth-child(3), td:nth-child(3),
+        th:nth-child(4), td:nth-child(4) {
+            white-space: nowrap;
+            text-align: center;
+        }
+        /* Link cells: centered + wider */
+        td:has(.link-btn) { text-align: center; min-width: 150px; }
 
         /* Password gate */
         #pw-gate {
@@ -1192,7 +1203,7 @@
                     Pilih Legion:
                 </label>
                 <select id="legion-select" class="legion-select" onchange="filterByLegion()">
-                    <option value="">-- Semua Legion --</option>
+                    <option value="">--</option>
                 </select>
 
                 <div class="count-badge" id="count-badge">
@@ -1410,7 +1421,7 @@
 
             // Populate legion dropdown
             const legionSelect = document.getElementById('legion-select');
-            legionSelect.innerHTML = '<option value="">-- Semua Legion --</option>' +
+            legionSelect.innerHTML = '<option value="">--</option>' +
                 legions.map(l => `<option value="${l}">${l}</option>`).join('');
 
             // Show loading
@@ -1786,8 +1797,8 @@
         function rekapDropdown(id) {
             const cur = getRekapStatus(id);
             return `<select class="rekap-select ${cur}" onchange="setRekapStatus('${id}', this.value, this)">
-                        <option value="belum" ${cur === 'belum' ? 'selected' : ''}>Belum direkap</option>
-                        <option value="sudah" ${cur === 'sudah' ? 'selected' : ''}>Sudah direkap</option>
+                        <option value="belum" ${cur === 'belum' ? 'selected' : ''}>Uncheck</option>
+                        <option value="sudah" ${cur === 'sudah' ? 'selected' : ''}>Done</option>
                     </select>`;
         }
 
